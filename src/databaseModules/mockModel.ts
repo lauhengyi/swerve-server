@@ -12,6 +12,18 @@ class mockModel {
       resolve({ name: 'Found object' });
     });
   }
+  findByIdAndUpdate(id: string): Promise<any> {
+    this.calls++;
+    return new Promise((resolve, reject) => {
+      resolve({ name: 'Updated object' });
+    });
+  }
+  findByIdAndDelete(id: string): Promise<void> {
+    this.calls++;
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
 }
 
 export default mockModel;
