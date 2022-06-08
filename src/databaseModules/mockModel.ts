@@ -12,10 +12,10 @@ class mockModel {
       resolve({ name: 'Found object' });
     });
   }
-  findByIdAndUpdate(id: string): Promise<any> {
+  findByIdAndUpdate(id: string, payload: any): Promise<any> {
     this.calls++;
     return new Promise((resolve, reject) => {
-      resolve({ name: 'Updated object' });
+      resolve(payload);
     });
   }
   findByIdAndDelete(id: string): Promise<void> {
