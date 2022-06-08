@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import IProduct from '../interfaces/Iproduct';
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -15,7 +16,7 @@ const productSchema = new mongoose.Schema({
     trim: true
   },
   category: {
-    type: String,
+    type: Number,
     required: [true, 'Product category is required']
   },
   subCategory: {
@@ -23,6 +24,6 @@ const productSchema = new mongoose.Schema({
   }
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model<IProduct>('Product', productSchema);
 
 export default Product;
