@@ -1,5 +1,5 @@
 import deleteFactory from '../deleteFactory';
-import mockModel from '../mockModel';
+import mockModel from '../../mockModel';
 
 describe('CreateFactory', () => {
   describe('When passed in an appropiate model', () => {

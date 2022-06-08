@@ -1,4 +1,4 @@
-import IDatabase from '../../interfaces/Idatabase';
+import IDatabase from '../interfaces/Idatabase';
 
 // Payload is set as any as mongoose can deal with model validation
 const createFactory = (database: IDatabase) => {
