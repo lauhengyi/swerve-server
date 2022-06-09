@@ -4,7 +4,10 @@ import IDatabase from '../interfaces/Idatabase';
 const updateFactory = (database: IDatabase) => {
   return async (id: string, payload: any) => {
     try {
-      return await database.findByIdAndUpdate(id, payload);
+      return await database.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true
+      });
     } catch {
       throw new Error('Error finding product');
     }
