@@ -18,10 +18,10 @@ class mockModel {
       resolve(payload);
     });
   }
-  findByIdAndDelete(id: string): Promise<void> {
+  findByIdAndDelete(id: string): Promise<any> {
     this.calls++;
     return new Promise((resolve, reject) => {
-      resolve();
+      resolve({ name: 'Found object and deleted' });
     });
   }
 }

@@ -15,8 +15,11 @@ describe('deleteFactory', () => {
     it('Should have the returned function return back a promise for nothing when given an id', async () => {
       const database = new mockModel();
       const deleter = deleteFactory(database);
+      const idPayload = {
+        name: 'Found object and deleted'
+      };
 
-      expect(await deleter('12345')).toBeUndefined();
+      expect(await deleter('12345')).toEqual(idPayload);
     });
   });
 });
