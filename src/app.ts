@@ -1,4 +1,5 @@
 import express from 'express';
+import mockQuery from './databaseModules/mockQuery';
 
 const app = express();
 
@@ -9,5 +10,11 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+const promiseObj = new mockQuery((resolve, reject) => {
+  resolve({ name: 'Found object' });
+});
+
+console.log(promiseObj);
 
 export default app;

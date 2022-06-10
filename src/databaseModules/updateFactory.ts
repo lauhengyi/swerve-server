@@ -8,7 +8,8 @@ const updateFactory = (database: IDatabase) => {
         new: true,
         runValidators: true
       });
-    } catch {
+    } catch (err) {
+      console.log(err);
       throw new Error('Error finding product');
     }
   };
