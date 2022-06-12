@@ -10,7 +10,7 @@
   ],
   "rules": {
     "prettier/prettier": [
-      "warning",
+      1,
       {
         "endOfLine": "auto"
       }

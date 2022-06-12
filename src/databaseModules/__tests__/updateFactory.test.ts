@@ -1,7 +1,7 @@
 import updateFactory from '../updateFactory';
 import mockModel from '../mockModel';
 
-describe('queryFactory', () => {
+describe('updateFactory', () => {
   describe('When passed in an appropiate model', () => {
     it('Should return a function that calls the database once when given an id', async () => {
       const database = new mockModel();

@@ -11,10 +11,4 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const promiseObj = new mockQuery((resolve, reject) => {
-  resolve({ name: 'Found object' });
-});
-
-console.log(promiseObj);
-
 export default app;

@@ -1,14 +1,10 @@
 import IQuery from '../interfaces/IQuery';
 
-class mockQuery extends Promise<any> implements IQuery {
-  calls: number = 0;
-  constructor(
-    executor: (
-      resolve: (value: unknown) => void,
-      reject: (reason?: any) => void
-    ) => void
-  ) {
-    super(executor);
+class mockQuery implements IQuery {
+  promise;
+  calls = 0;
+  constructor(payload: object) {
+    this.promise = Promise.resolve(payload);
   }
   find(filterObj: any): IQuery {
     this.calls++;

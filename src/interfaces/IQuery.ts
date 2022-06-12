@@ -1,5 +1,5 @@
-export default interface IQuery extends Promise<any> {
-  find(filterObj: any): IQuery;
+export default interface IQuery {
+  find(filterObj: object): IQuery;
   sort(sortObj: string): IQuery;
   skip(skip: number): IQuery;
   limit(limit: number): IQuery;
