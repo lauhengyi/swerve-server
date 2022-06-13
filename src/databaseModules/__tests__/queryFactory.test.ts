@@ -1,22 +1,24 @@
-describe('queryFactory') {
-    describe('When passed in an appropiate model', () => {
+import queryFactory from '../queryFactory';
+import mockModel from '../mockModel';
+
+describe('queryFactory', () => {
+  describe('When passed in an appropiate model', () => {
     it('Should return a function that calls the database once when given an id', async () => {
       const database = new mockModel();
-      const deleter = deleteFactory(database);
+      const querier = queryFactory(database);
 
-      expect(deleter).toBeInstanceOf(Function);
+      expect(querier).toBeInstanceOf(Function);
 
-      await deleter('123456');
+      await querier({ sort: 'price' });
       expect(database.calls).toBe(1);
     });
-    it('Should have the returned function return back a promise for nothing when given an id', async () => {
+    it('Should have the returned function return back a promise for the objects found in the database', async () => {
       const database = new mockModel();
-      const deleter = deleteFactory(database);
-      const idPayload = {
-        name: 'Found object and deleted'
-      };
+      const querier = queryFactory(database);
 
-      expect(await deleter('12345')).toEqual(idPayload);
+      const query = querier({ sort: 'price' });
+
+      expect(await query).toEqual({ name: 'Found object' });
     });
-    }
-}
+  });
+});
