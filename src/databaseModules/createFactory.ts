@@ -1,6 +1,6 @@
 import IDatabase from '../interfaces/Idatabase';
 
-// Payload is set as any as mongoose can deal with model validation
+// Payload is set as any object as mongoose can deal with model validation
 const createFactory = (database: IDatabase) => {
   return async (payload: object) => {
     try {
