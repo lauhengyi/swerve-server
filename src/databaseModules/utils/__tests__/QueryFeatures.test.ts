@@ -1,10 +1,10 @@
 import QueryFeatures from '../QueryFeatures';
-import mockQuery from '../../mockQuery';
+import MockQuery from '../../MockQuery';
 
 describe('QueryFeatures', () => {
   describe('When filtering', () => {
     it('Will call the database query once', async () => {
-      const query = new mockQuery({ name: 'test' });
+      const query = new MockQuery({ name: 'test' });
 
       const queryObj = new QueryFeatures(query, { sort: 'price' }).filter();
 
@@ -14,7 +14,7 @@ describe('QueryFeatures', () => {
   });
   describe('When sorting', () => {
     it('Will call the database query once', async () => {
-      const query = new mockQuery({ name: 'test' });
+      const query = new MockQuery({ name: 'test' });
 
       const queryObj = new QueryFeatures(query, { sort: 'price' }).sort();
 
@@ -24,7 +24,7 @@ describe('QueryFeatures', () => {
   });
   describe('When selecting fields', () => {
     it('Will call the database query once', async () => {
-      const query = new mockQuery({ name: 'test' });
+      const query = new MockQuery({ name: 'test' });
 
       const queryObj = new QueryFeatures(query, {
         sort: 'price'
@@ -36,7 +36,7 @@ describe('QueryFeatures', () => {
   });
   describe('When paginating', () => {
     it('Will call the database query twice, limit and skip', async () => {
-      const query = new mockQuery({ name: 'test' });
+      const query = new MockQuery({ name: 'test' });
 
       const queryObj = new QueryFeatures(query, {
         sort: 'price'
@@ -48,7 +48,7 @@ describe('QueryFeatures', () => {
   });
   describe('When filtering, sorting, selecting fields and paginating', () => {
     it('Will call the database query 5 times', async () => {
-      const query = new mockQuery({ name: 'test' });
+      const query = new MockQuery({ name: 'test' });
 
       const queryObj = new QueryFeatures(query, { sort: 'price' })
         .filter()

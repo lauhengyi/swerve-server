@@ -1,5 +1,5 @@
 import express from 'express';
-import mockQuery from './databaseModules/mockQuery';
+import MockQuery from './databaseModules/MockQuery';
 
 const app = express();
 

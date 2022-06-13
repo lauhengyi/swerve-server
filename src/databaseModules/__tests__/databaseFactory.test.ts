@@ -1,9 +1,9 @@
-import mockModel from '../mockModel';
+import MockModel from '../MockModel';
 import databaseFactory from '../databaseFactory';
 describe('databaseFactory', () => {
   describe('When given a model', () => {
     it('Should return an object that has the methods create, find, query, update and delete', () => {
-      const model = new mockModel();
+      const model = new MockModel();
       const database = databaseFactory(model);
 
       expect(database).toBeInstanceOf(Object);

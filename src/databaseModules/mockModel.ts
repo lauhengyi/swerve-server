@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Unused vars will exist on this object as it is a mock object;
 import IModel from '../interfaces/IModel';
-import mockQuery from './mockQuery';
-class mockModel implements IModel {
+import MockQuery from './MockQuery';
+class MockModel implements IModel {
   calls = 0;
-  create(payload: object): mockQuery {
+  create(payload: object): MockQuery {
     this.calls++;
-    return new mockQuery(payload);
+    return new MockQuery(payload);
   }
-  find(query: object): mockQuery {
+  find(query: object): MockQuery {
     this.calls++;
-    return new mockQuery({ name: 'Found object' });
+    return new MockQuery({ name: 'Found object' });
   }
-  findById(id: string): mockQuery {
+  findById(id: string): MockQuery {
     this.calls++;
-    return new mockQuery({ name: 'Found object' });
+    return new MockQuery({ name: 'Found object' });
   }
-  findByIdAndUpdate(id: string, payload: object): mockQuery {
+  findByIdAndUpdate(id: string, payload: object): MockQuery {
     this.calls++;
-    return new mockQuery(payload);
+    return new MockQuery(payload);
   }
-  findByIdAndDelete(id: string): mockQuery {
+  findByIdAndDelete(id: string): MockQuery {
     this.calls++;
-    return new mockQuery({ name: 'Found object and deleted' });
+    return new MockQuery({ name: 'Found object and deleted' });
   }
 }
 
-export default mockModel;
+export default MockModel;

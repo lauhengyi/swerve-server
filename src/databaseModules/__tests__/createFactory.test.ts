@@ -1,10 +1,10 @@
 import createFactory from '../createFactory';
-import mockModel from '../mockModel';
+import MockModel from '../MockModel';
 
 describe('CreateFactory', () => {
   describe('When passed in an appropiate model', () => {
     it('Should return a function that calls the model to create once', async () => {
-      const model = new mockModel();
+      const model = new MockModel();
       const create = createFactory(model);
 
       expect(create).toBeInstanceOf(Function);
@@ -13,7 +13,7 @@ describe('CreateFactory', () => {
       expect(model.calls).toBe(1);
     });
     it('Should have the returned function return back a promise for the object created in the model', async () => {
-      const model = new mockModel();
+      const model = new MockModel();
       const create = createFactory(model);
       const payload = {
         name: 'Test',

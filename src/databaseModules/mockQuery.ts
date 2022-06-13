@@ -2,7 +2,7 @@
 // Unused vars will exist on this object as it is a mock object;
 import IQuery from '../interfaces/IQuery';
 
-class mockQuery implements IQuery {
+class MockQuery implements IQuery {
   payload;
   calls = 0;
   constructor(payload: object) {
@@ -37,4 +37,4 @@ class mockQuery implements IQuery {
   }
 }
 
-export default mockQuery;
+export default MockQuery;

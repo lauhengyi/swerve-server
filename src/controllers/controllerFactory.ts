@@ -1,8 +1,45 @@
 import { Request, Response } from 'express';
+import IDatabase from '../interfaces/IDatabase';
 
-const getOne = (req: Request, res: Response) => {};
+const createOne = (database: IDatabase) => {
+  return async (req: Request, res: Response) => {
+    try {
+      const product = await database.create(req.body);
+      res.status(201).json({
+        status: 'success',
+        data: {
+          product
+        }
+      });
+    } catch (err) {
+      res.status(400).json({
+        status: 'fail',
+        message: err
+      });
+    }
+  };
+};
 
-const createOne = (req: Request, res: Response) => {};
+const getOne = (database: IDatabase) => {
+  return async (req: Request, res: Response) => {
+    try {
+      const product = await database.find(req.params.id);
+      res.status(200).json({
+        status: 'success',
+        data: {
+          product
+        }
+      });
+    } catch (err) {
+      res.status(404).json({
+        status: 'fail',
+        message: err
+      });
+    }
+  };
+};
+
+const queryOne = (req: Request, res: Response) => {};
 
 const updateOne = (req: Request, res: Response) => {};
 
