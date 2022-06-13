@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Any type is allowed in this snippet since queryParams can be filled with any property by client.
 const getFilterObj = (queryParams: any): object => {
   const filterObj: any = {};
   for (const key in queryParams) {

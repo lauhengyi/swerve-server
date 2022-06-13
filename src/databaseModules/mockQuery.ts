@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Unused vars will exist on this object as it is a mock object;
 import IQuery from '../interfaces/IQuery';
 
 class mockQuery implements IQuery {
-  promise;
+  payload;
   calls = 0;
   constructor(payload: object) {
-    this.promise = Promise.resolve(payload);
+    this.payload = payload;
   }
-  find(filterObj: any): IQuery {
+  find(filterObj: object): IQuery {
     this.calls++;
     return this;
   }
@@ -29,6 +31,9 @@ class mockQuery implements IQuery {
   select(selectObj: string): IQuery {
     this.calls++;
     return this;
+  }
+  then(callback: (payload: object) => void): void {
+    callback(this.payload);
   }
 }
 

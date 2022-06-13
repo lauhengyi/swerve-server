@@ -2,7 +2,7 @@ import IDatabase from '../interfaces/Idatabase';
 
 // Payload is set as any as mongoose can deal with model validation
 const updateFactory = (database: IDatabase) => {
-  return async (id: string, payload: any) => {
+  return async (id: string, payload: object) => {
     try {
       return await database.findByIdAndUpdate(id, payload, {
         new: true,
