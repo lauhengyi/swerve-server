@@ -1,5 +1,5 @@
 import IQuery from './IQuery';
-export default interface IDatabase {
+export default interface IModel {
   create(data: object): IQuery;
   find(query?: object): IQuery;
   findById(id: string): IQuery;

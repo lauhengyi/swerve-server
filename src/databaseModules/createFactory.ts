@@ -1,10 +1,10 @@
-import IDatabase from '../interfaces/Idatabase';
+import IModel from '../interfaces/IModel';
 
 // Payload is set as any object as mongoose can deal with model validation
-const createFactory = (database: IDatabase) => {
+const createFactory = (model: IModel) => {
   return async (payload: object) => {
     try {
-      return await database.create(payload);
+      return await model.create(payload);
     } catch {
       throw new Error('Error creating product');
     }

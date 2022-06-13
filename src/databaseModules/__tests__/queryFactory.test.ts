@@ -3,18 +3,18 @@ import mockModel from '../mockModel';
 
 describe('queryFactory', () => {
   describe('When passed in an appropiate model', () => {
-    it('Should return a function that calls the database once when given an id', async () => {
-      const database = new mockModel();
-      const querier = queryFactory(database);
+    it('Should return a function that calls the model once when given an id', async () => {
+      const model = new mockModel();
+      const querier = queryFactory(model);
 
       expect(querier).toBeInstanceOf(Function);
 
       await querier({ sort: 'price' });
-      expect(database.calls).toBe(1);
+      expect(model.calls).toBe(1);
     });
-    it('Should have the returned function return back a promise for the objects found in the database', async () => {
-      const database = new mockModel();
-      const querier = queryFactory(database);
+    it('Should have the returned function return back a promise for the objects found in the model', async () => {
+      const model = new mockModel();
+      const querier = queryFactory(model);
 
       const query = querier({ sort: 'price' });
 

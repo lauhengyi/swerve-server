@@ -1,10 +1,9 @@
-import IDatabase from '../interfaces/Idatabase';
+import IModel from '../interfaces/IModel';
 
-// Payload is set as any as mongoose can deal with model validation
-const deleteFactory = (database: IDatabase) => {
+const deleteFactory = (model: IModel) => {
   return async (id: string) => {
     try {
-      return await database.findByIdAndDelete(id);
+      return await model.findByIdAndDelete(id);
     } catch {
       throw new Error('Error deleting product');
     }

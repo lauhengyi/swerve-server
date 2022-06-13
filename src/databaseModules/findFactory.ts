@@ -1,10 +1,9 @@
-import IDatabase from '../interfaces/Idatabase';
+import IModel from '../interfaces/IModel';
 
-// Payload is set as any as mongoose can deal with model validation
-const findFactory = (database: IDatabase) => {
+const findFactory = (model: IModel) => {
   return async (id: string) => {
     try {
-      return await database.findById(id);
+      return await model.findById(id);
     } catch {
       throw new Error('Error finding product');
     }

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Unused vars will exist on this object as it is a mock object;
-import IDatabase from '../interfaces/IDatabase';
+import IModel from '../interfaces/IModel';
 import mockQuery from './mockQuery';
-class mockModel implements IDatabase {
+class mockModel implements IModel {
   calls = 0;
   create(payload: object): mockQuery {
     this.calls++;

@@ -3,18 +3,18 @@ import mockModel from '../mockModel';
 
 describe('CreateFactory', () => {
   describe('When passed in an appropiate model', () => {
-    it('Should return a function that calls the database to create once', async () => {
-      const database = new mockModel();
-      const create = createFactory(database);
+    it('Should return a function that calls the model to create once', async () => {
+      const model = new mockModel();
+      const create = createFactory(model);
 
       expect(create).toBeInstanceOf(Function);
 
       await create({ name: 'Test' });
-      expect(database.calls).toBe(1);
+      expect(model.calls).toBe(1);
     });
-    it('Should have the returned function return back a promise for the object created in the database', async () => {
-      const database = new mockModel();
-      const create = createFactory(database);
+    it('Should have the returned function return back a promise for the object created in the model', async () => {
+      const model = new mockModel();
+      const create = createFactory(model);
       const payload = {
         name: 'Test',
         description: 'This is a test',

@@ -1,10 +1,10 @@
-import IDatabase from '../interfaces/IDatabase';
+import IModel from '../interfaces/IModel';
 import QueryFeatures from './utils/queryFeatures';
 
-const queryFactory = (database: IDatabase) => {
+const queryFactory = (model: IModel) => {
   return async (queryParams: object) => {
     try {
-      const queryObj = new QueryFeatures(database.find(), queryParams)
+      const queryObj = new QueryFeatures(model.find(), queryParams)
         .filter()
         .sort()
         .paginate()
