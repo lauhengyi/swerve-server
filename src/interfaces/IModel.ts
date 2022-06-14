@@ -4,5 +4,5 @@ export default interface IModel {
   find(query?: object): IQuery;
   findById(id: string): IQuery;
   findByIdAndUpdate(id: string, payload: object, options?: object): IQuery;
-  findByIdAndDelete(id: string): IQuery;
+  findByIdAndDelete(id: string): void;
 }

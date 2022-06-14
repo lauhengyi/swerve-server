@@ -1,28 +1,50 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// Unused vars will exist on this object as it is a mock object;
 import IModel from '../interfaces/IModel';
 import MockQuery from './MockQuery';
+import { Request } from 'express';
 class MockModel implements IModel {
   calls = 0;
-  create(payload: object): MockQuery {
+  create(payload: Request['body']): MockQuery {
     this.calls++;
-    return new MockQuery(payload);
+    if (payload?.test === 'error') {
+      throw new Error('Test Error for create');
+    } else {
+      return new MockQuery(payload);
+    }
   }
-  find(query: object): MockQuery {
+  find(queryParams: Request['query']): MockQuery {
     this.calls++;
-    return new MockQuery({ name: 'Found object' });
+    if (queryParams?.test === 'error') {
+      throw new Error('Test Error for find');
+    } else {
+      return new MockQuery([
+        { name: 'Found object 1' },
+        { name: 'Found object 2' }
+      ]);
+    }
   }
   findById(id: string): MockQuery {
     this.calls++;
-    return new MockQuery({ name: 'Found object' });
+    if (id === 'error') {
+      throw new Error('Test Error for findById');
+    } else {
+      return new MockQuery({ name: 'Found object' });
+    }
   }
-  findByIdAndUpdate(id: string, payload: object): MockQuery {
+  findByIdAndUpdate(id: string, payload: Request['body']): MockQuery {
     this.calls++;
-    return new MockQuery(payload);
+    if (id === 'error') {
+      throw new Error('Test Error for findByIdAndUpdate');
+    } else {
+      return new MockQuery(payload);
+    }
   }
-  findByIdAndDelete(id: string): MockQuery {
+  findByIdAndDelete(id: string) {
     this.calls++;
-    return new MockQuery({ name: 'Found object and deleted' });
+    if (id === 'error') {
+      throw new Error('Test Error for findByIdAndDelete');
+    } else {
+      return;
+    }
   }
 }
 

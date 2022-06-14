@@ -18,7 +18,8 @@ describe('queryFactory', () => {
 
       const query = querier({ sort: 'price' });
 
-      expect(await query).toEqual({ name: 'Found object' });
+      const expected = [{ name: 'Found object 1' }, { name: 'Found object 2' }];
+      expect(await query).toEqual(expected);
     });
   });
 });
