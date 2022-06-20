@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Unused vars will exist on this object as it is a mock object;
+import { Request } from 'express';
 import IQuery from '../interfaces/IQuery';
 
 class MockQuery implements IQuery {
@@ -8,8 +9,11 @@ class MockQuery implements IQuery {
   constructor(payload: object) {
     this.payload = payload;
   }
-  find(filterObj: object): IQuery {
+  find(filterObj: Request['query']): IQuery {
     this.calls++;
+    if (filterObj?.test === 'error') {
+      throw new Error('Test Error for find');
+    }
     return this;
   }
 
