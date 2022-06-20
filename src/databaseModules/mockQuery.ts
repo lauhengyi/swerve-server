@@ -6,7 +6,7 @@ import IQuery from '../interfaces/IQuery';
 class MockQuery implements IQuery {
   payload;
   calls = 0;
-  constructor(payload: object) {
+  constructor(payload: object[]) {
     this.payload = payload;
   }
   find(filterObj: Request['query']): IQuery {
@@ -36,7 +36,7 @@ class MockQuery implements IQuery {
     this.calls++;
     return this;
   }
-  then(callback: (payload: object) => void): void {
+  then(callback: (payload: object[]) => void): void {
     callback(this.payload);
   }
 }

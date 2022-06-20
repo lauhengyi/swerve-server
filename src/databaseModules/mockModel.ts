@@ -3,12 +3,12 @@ import MockQuery from './MockQuery';
 import { Request } from 'express';
 class MockModel implements IModel {
   calls = 0;
-  create(payload: Request['body']): MockQuery {
+  create(payload: Request['body']): Promise<object> {
     this.calls++;
     if (payload?.test === 'error') {
       throw new Error('Test Error for create');
     } else {
-      return new MockQuery(payload);
+      return Promise.resolve(payload);
     }
   }
   find(queryParams: Request['query']): MockQuery {
@@ -22,20 +22,20 @@ class MockModel implements IModel {
       ]);
     }
   }
-  findById(id: string): MockQuery {
+  findById(id: string): object {
     this.calls++;
     if (id === 'error') {
       throw new Error('Test Error for findById');
     } else {
-      return new MockQuery({ name: 'Found object' });
+      return Promise.resolve({ name: 'Found object' });
     }
   }
-  findByIdAndUpdate(id: string, payload: Request['body']): MockQuery {
+  findByIdAndUpdate(id: string, payload: Request['body']): object {
     this.calls++;
     if (id === 'error') {
       throw new Error('Test Error for findByIdAndUpdate');
     } else {
-      return new MockQuery(payload);
+      return Promise.resolve(payload);
     }
   }
   findByIdAndDelete(id: string) {

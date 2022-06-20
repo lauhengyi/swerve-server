@@ -45,6 +45,7 @@ const queryAllFactory = (database: IDatabase) => {
       const doc = await database.query(req.query);
       res.status(200).json({
         status: 'success',
+        results: doc.length,
         data: {
           doc
         }

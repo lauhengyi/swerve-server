@@ -2,7 +2,7 @@ import IModel from '../interfaces/IModel';
 import QueryFeatures from './utils/queryFeatures';
 
 const queryFactory = (model: IModel) => {
-  return async (queryParams: object) => {
+  return async (queryParams: object): Promise<object[]> => {
     const queryObj = new QueryFeatures(model.find(), queryParams)
       .filter()
       .sort()
