@@ -217,7 +217,11 @@ describe('controllerFactory', () => {
         await deleteFactory(req, res);
 
         expect(res.statusCode).toBe(204);
-        expect(res._getData()).toBe('');
+        const expectedMessage = {
+          status: 'success',
+          data: null
+        };
+        expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
     describe('When an error is thrown from invalid id', () => {
