@@ -46,5 +46,22 @@ describe('AppError', () => {
         expect(err.status).toBe(expected[i]);
       }
     });
+
+    it('Should have an "isOperational" property that is set to true', () => {
+      const errs = [
+        new AppError('Test Error', 500),
+        new AppError('Test Error', 404)
+      ];
+
+      for (let i = 0; i < errs.length; i++) {
+        expect(errs[i].isOperational).toBe(true);
+      }
+    });
+
+    it('Should not have itself within the stack trace', () => {
+      const err = new AppError('Test Error', 500);
+
+      expect(err.stack).not.toMatch(/AppError/);
+    });
   });
 });

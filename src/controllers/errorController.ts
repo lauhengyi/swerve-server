@@ -1,7 +1,7 @@
-import IAppError from '../interfaces/IAppError';
 import { Request, Response } from 'express';
+import AppError from '../utils/AppError';
 
-const errorController = (err: IAppError, req: Request, res: Response) => {
+const errorController = (err: AppError, req: Request, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
     message: err.message
