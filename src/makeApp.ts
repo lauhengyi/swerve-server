@@ -13,6 +13,14 @@ const makeApp = (collection: ICollection) => {
   const apiString = '/api/v1';
   app.use(`${apiString}/products`, productRoutes(collection.products));
 
+  // Catch all unhandled requests and return 404
+  app.all('*', (req, res) => {
+    res.status(404).json({
+      status: 'fail',
+      message: `Connot find ${req.originalUrl} on this server.`
+    });
+  });
+
   return app;
 };
 export default makeApp;
