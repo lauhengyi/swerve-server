@@ -70,7 +70,7 @@ describe('POST /products', () => {
 });
 
 describe('GET /products/:id', () => {
-  describe('When the request is valid', () => {
+  describe('When the id is valid and exists', () => {
     it('Should have a status code 200', async () => {
       const app = makeApp(mockCollection);
 
@@ -104,11 +104,11 @@ describe('GET /products/:id', () => {
     });
   });
 
-  describe('When a request is invalid', () => {
+  describe('When the id is valid but does not exist', () => {
     it('Should have a status code 404', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).get('/api/v1/products/error');
+      const response = await request(app).get('/api/v1/products/notFound');
 
       expect(response.status).toBe(404);
     });
@@ -116,7 +116,7 @@ describe('GET /products/:id', () => {
     it('Should return a content with a content-type of json', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).get('/api/v1/products/error');
+      const response = await request(app).get('/api/v1/products/notFound');
 
       expect(response.headers['content-type']).toMatch(/json/);
     });
@@ -188,7 +188,7 @@ describe('GET /products', () => {
 });
 
 describe('PATCH /products/:id', () => {
-  describe('When the request is valid', () => {
+  describe('When the id is valid and it exists', () => {
     it('Should have a status code 200', async () => {
       const app = makeApp(mockCollection);
 
@@ -229,11 +229,11 @@ describe('PATCH /products/:id', () => {
     });
   });
 
-  describe('When a request is invalid', () => {
+  describe('When the id is valid but does not exist', () => {
     it('Should have a status code 404', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).patch('/api/v1/products/error');
+      const response = await request(app).patch('/api/v1/products/notFound');
 
       expect(response.status).toBe(404);
     });
@@ -241,7 +241,7 @@ describe('PATCH /products/:id', () => {
     it('Should return a content with a content-type of json', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).patch('/api/v1/products/error');
+      const response = await request(app).patch('/api/v1/products/notFound');
 
       expect(response.headers['content-type']).toMatch(/json/);
     });
@@ -249,7 +249,7 @@ describe('PATCH /products/:id', () => {
 });
 
 describe('DELETE /products/:id', () => {
-  describe('When the request is valid', () => {
+  describe('When the id is valid and exists', () => {
     it('Should have a status code 204', async () => {
       const app = makeApp(mockCollection);
 
@@ -266,11 +266,11 @@ describe('DELETE /products/:id', () => {
     });
   });
 
-  describe('When a request is invalid', () => {
+  describe('When the id is valid but does not exist', () => {
     it('Should have a status code 404', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).delete('/api/v1/products/error');
+      const response = await request(app).delete('/api/v1/products/notFound');
 
       expect(response.status).toBe(404);
     });
@@ -278,7 +278,7 @@ describe('DELETE /products/:id', () => {
     it('Should return a content with a content-type of json', async () => {
       const app = makeApp(mockCollection);
 
-      const response = await request(app).delete('/api/v1/products/error');
+      const response = await request(app).delete('/api/v1/products/notFound');
 
       expect(response.headers['content-type']).toMatch(/json/);
     });
