@@ -16,7 +16,9 @@ describe('deleteFactory', () => {
       const model = new MockModel();
       const deleter = deleteFactory(model);
 
-      expect(await deleter('12345')).toBeUndefined();
+      expect(await deleter('12345')).toEqual({
+        name: 'Found object and deleted'
+      });
     });
   });
 });

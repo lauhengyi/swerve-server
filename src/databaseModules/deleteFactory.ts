@@ -2,7 +2,7 @@ import IModel from '../interfaces/IModel';
 
 const deleteFactory = (model: IModel) => {
   return async (id: string) => {
-    await model.findByIdAndDelete(id);
+    return await model.findByIdAndDelete(id);
   };
 };
 
