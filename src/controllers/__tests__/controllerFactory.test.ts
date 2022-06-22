@@ -28,7 +28,7 @@ describe('controllerFactory', () => {
       });
     });
     describe('when given a database that throws an error', () => {
-      it('Should call next on that error', () => {
+      it('Should call next on that error', async () => {
         const payload = {
           test: 'error'
         };
@@ -38,7 +38,7 @@ describe('controllerFactory', () => {
         const res = httpMocks.createResponse();
         const next = jest.fn();
 
-        createOne(req, res, next);
+        await createOne(req, res, next);
 
         expect(next.mock.calls.length).toBe(1);
       });
@@ -56,7 +56,7 @@ describe('controllerFactory', () => {
         });
         const res = httpMocks.createResponse();
 
-        await getOne(req, res);
+        await getOne(req, res, jest.fn());
 
         expect(res.statusCode).toBe(200);
         const expectedMessage = {
@@ -68,6 +68,19 @@ describe('controllerFactory', () => {
           }
         };
         expect(res._getJSONData()).toEqual(expectedMessage);
+      });
+    });
+    describe('when given a database that throws an error', () => {
+      it('Should call next on that error', async () => {
+        const database = databaseFactory(new MockModel());
+        const getOne = controllerFactory.getOneFactory(database);
+        const req = httpMocks.createRequest({ params: { id: 'invalidId' } });
+        const res = httpMocks.createResponse();
+        const next = jest.fn();
+
+        await getOne(req, res, next);
+
+        expect(next.mock.calls.length).toBe(1);
       });
     });
   });
@@ -83,7 +96,7 @@ describe('controllerFactory', () => {
         });
         const res = httpMocks.createResponse();
 
-        await queryAll(req, res);
+        await queryAll(req, res, jest.fn());
 
         expect(res.statusCode).toBe(200);
         const expectedMessage = {
@@ -103,6 +116,22 @@ describe('controllerFactory', () => {
         expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
+    describe('when given a database that throws an error', () => {
+      it('Should call next on that error', async () => {
+        const payload = {
+          test: 'error'
+        };
+        const database = databaseFactory(new MockModel());
+        const queryAll = controllerFactory.queryAllFactory(database);
+        const req = httpMocks.createRequest({ query: payload });
+        const res = httpMocks.createResponse();
+        const next = jest.fn();
+
+        await queryAll(req, res, next);
+
+        expect(next.mock.calls.length).toBe(1);
+      });
+    });
   });
   describe('updateOne', () => {
     describe('When given a suitable database will return a function which when given a valid id and payload', () => {
@@ -119,7 +148,7 @@ describe('controllerFactory', () => {
         });
         const res = httpMocks.createResponse();
 
-        await updateOne(req, res);
+        await updateOne(req, res, jest.fn());
 
         expect(res.statusCode).toBe(200);
         const expectedMessage = {
@@ -131,6 +160,22 @@ describe('controllerFactory', () => {
           }
         };
         expect(res._getJSONData()).toEqual(expectedMessage);
+      });
+    });
+    describe('when given a database that throws an error', () => {
+      it('Should call next on that error', async () => {
+        const database = databaseFactory(new MockModel());
+        const updateOne = controllerFactory.updateOneFactory(database);
+        const req = httpMocks.createRequest({
+          params: { id: 'invalidId' },
+          body: { price: '100' }
+        });
+        const res = httpMocks.createResponse();
+        const next = jest.fn();
+
+        await updateOne(req, res, next);
+
+        expect(next.mock.calls.length).toBe(1);
       });
     });
   });
@@ -146,7 +191,7 @@ describe('controllerFactory', () => {
         });
         const res = httpMocks.createResponse();
 
-        await deleteFactory(req, res);
+        await deleteFactory(req, res, jest.fn());
 
         expect(res.statusCode).toBe(204);
         const expectedMessage = {
@@ -154,6 +199,19 @@ describe('controllerFactory', () => {
           data: null
         };
         expect(res._getJSONData()).toEqual(expectedMessage);
+      });
+    });
+    describe('when given a database that throws an error', () => {
+      it('Should call next on that error', async () => {
+        const database = databaseFactory(new MockModel());
+        const deleteOne = controllerFactory.deleteOneFactory(database);
+        const req = httpMocks.createRequest({ params: { id: 'invalidId' } });
+        const res = httpMocks.createResponse();
+        const next = jest.fn();
+
+        await deleteOne(req, res, next);
+
+        expect(next.mock.calls.length).toBe(1);
       });
     });
   });

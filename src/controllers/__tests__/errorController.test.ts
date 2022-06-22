@@ -15,7 +15,7 @@ describe('errorController', () => {
         const req = httpMocks.createRequest();
         const res = httpMocks.createResponse();
 
-        errorController(errs[i], req, res);
+        errorController(errs[i], req, res, jest.fn());
 
         expect(res.statusCode).toBe(errs[i].statusCode);
       }
@@ -32,7 +32,7 @@ describe('errorController', () => {
         const req = httpMocks.createRequest();
         const res = httpMocks.createResponse();
 
-        errorController(errs[i], req, res);
+        errorController(errs[i], req, res, jest.fn());
 
         const expectedMessage = {
           status: errs[i].status,
@@ -55,7 +55,7 @@ describe('errorController', () => {
         const req = httpMocks.createRequest();
         const res = httpMocks.createResponse();
 
-        errorController(errs[i], req, res);
+        errorController(errs[i], req, res, jest.fn());
 
         expect(res.statusCode).toBe(500);
       }
@@ -73,7 +73,7 @@ describe('errorController', () => {
         const req = httpMocks.createRequest();
         const res = httpMocks.createResponse();
 
-        errorController(errs[i], req, res);
+        errorController(errs[i], req, res, jest.fn());
 
         expect(res._getJSONData().status).toBe('error');
       }

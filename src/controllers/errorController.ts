@@ -1,10 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import AppError from '../utils/AppError';
 
 const errorController = (
   err: AppError | Error,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   let statusCode: number;
   let status: string;

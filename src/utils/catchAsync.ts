@@ -9,7 +9,7 @@ type middlewareFn = (
 const catchAsync =
   (fn: middlewareFn): middlewareFn =>
   (req, res, next) => {
-    return fn(req, res, next).catch((err) => next(err));
+    return fn(req, res, next).catch(next);
   };
 
 export default catchAsync;
