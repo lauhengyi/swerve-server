@@ -9,7 +9,11 @@ class AppError extends Error {
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
     this.isOperational = true;
 
+    // Remove the AppError object from the stack trace.
     Error.captureStackTrace(this, this.constructor);
+
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, AppError.prototype);
   }
 }
 

@@ -1,5 +1,7 @@
 import express from 'express';
 import ICollection from './interfaces/ICollection';
+import errorController from './controllers/errorController';
+import AppError from './utils/AppError';
 import productRoutes from './routes/productRoutes';
 
 const makeApp = (collection: ICollection) => {
@@ -14,12 +16,12 @@ const makeApp = (collection: ICollection) => {
   app.use(`${apiString}/products`, productRoutes(collection.products));
 
   // Catch all unhandled requests and return 404
-  app.all('*', (req, res) => {
-    res.status(404).json({
-      status: 'fail',
-      message: `Connot find ${req.originalUrl} on this server.`
-    });
+  app.all('*', (req, res, next) => {
+    const message = `Connot find ${req.originalUrl} on this server.`;
+    next(new AppError(message, 404));
   });
+
+  app.use(errorController);
 
   return app;
 };

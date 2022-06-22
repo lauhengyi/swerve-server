@@ -1,9 +1,24 @@
 import { Request, Response } from 'express';
 import AppError from '../utils/AppError';
 
-const errorController = (err: AppError, req: Request, res: Response) => {
-  res.status(err.statusCode).json({
-    status: err.status,
+const errorController = (
+  err: AppError | Error,
+  req: Request,
+  res: Response
+) => {
+  let statusCode: number;
+  let status: string;
+
+  if (err instanceof AppError) {
+    statusCode = err.statusCode;
+    status = err.status;
+  } else {
+    status = 'error';
+    statusCode = 500;
+  }
+
+  res.status(statusCode).json({
+    status: status,
     message: err.message
   });
 };

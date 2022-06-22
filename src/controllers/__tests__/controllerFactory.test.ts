@@ -15,7 +15,7 @@ describe('controllerFactory', () => {
         const req = httpMocks.createRequest({ body: payload });
         const res = httpMocks.createResponse();
 
-        await createOne(req, res);
+        await createOne(req, res, jest.fn());
 
         expect(res.statusCode).toBe(201);
         const expectedMessage = {
@@ -27,25 +27,20 @@ describe('controllerFactory', () => {
         expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
-    describe('When an error is thrown from invalid payload', () => {
-      it('should return a status code of 400 and a suitable message', async () => {
+    describe('when given a database that throws an error', () => {
+      it('Should call next on that error', () => {
+        const payload = {
+          test: 'error'
+        };
         const database = databaseFactory(new MockModel());
         const createOne = controllerFactory.createOneFactory(database);
-        const req = httpMocks.createRequest({
-          body: {
-            test: 'error'
-          }
-        });
+        const req = httpMocks.createRequest({ body: payload });
         const res = httpMocks.createResponse();
+        const next = jest.fn();
 
-        await createOne(req, res);
+        createOne(req, res, next);
 
-        expect(res.statusCode).toBe(400);
-        // const expectedMessage = {
-        //   status: 'fail',
-        //   message: { message: 'Test Error for create' }
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
+        expect(next.mock.calls.length).toBe(1);
       });
     });
   });
@@ -64,36 +59,15 @@ describe('controllerFactory', () => {
         await getOne(req, res);
 
         expect(res.statusCode).toBe(200);
-        // const expectedMessage = {
-        //   status: 'success',
-        //   data: {
-        //     doc: {
-        //       name: 'Found object'
-        //     }
-        //   }
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
-      });
-    });
-    describe('When an error is thrown from invalid id', () => {
-      it('should return a status code of 404 and a suitable message', async () => {
-        const database = databaseFactory(new MockModel());
-        const getOne = controllerFactory.getOneFactory(database);
-        const req = httpMocks.createRequest({
-          params: {
-            id: 'error'
+        const expectedMessage = {
+          status: 'success',
+          data: {
+            doc: {
+              name: 'Found object'
+            }
           }
-        });
-        const res = httpMocks.createResponse();
-
-        await getOne(req, res);
-
-        expect(res.statusCode).toBe(404);
-        // const expectedMessage = {
-        //   status: 'fail',
-        //   message: 'Test Error for findById'
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
+        };
+        expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
   });
@@ -112,42 +86,21 @@ describe('controllerFactory', () => {
         await queryAll(req, res);
 
         expect(res.statusCode).toBe(200);
-        // const expectedMessage = {
-        //   status: 'success',
-        //   results: 2,
-        //   data: {
-        //     doc: [
-        //       {
-        //         name: 'Found object 1'
-        //       },
-        //       {
-        //         name: 'Found object 2'
-        //       }
-        //     ]
-        //   }
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
-      });
-    });
-    describe('When an error is thrown from invalid query', () => {
-      it('should return a status code of 404 and a suitable message', async () => {
-        const database = databaseFactory(new MockModel());
-        const queryAll = controllerFactory.queryAllFactory(database);
-        const req = httpMocks.createRequest({
-          query: {
-            test: 'error'
+        const expectedMessage = {
+          status: 'success',
+          results: 2,
+          data: {
+            doc: [
+              {
+                name: 'Found object 1'
+              },
+              {
+                name: 'Found object 2'
+              }
+            ]
           }
-        });
-        const res = httpMocks.createResponse();
-
-        await queryAll(req, res);
-
-        expect(res.statusCode).toBe(404);
-        // const expectedMessage = {
-        //   status: 'fail',
-        //   message: 'Test Error for find'
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
+        };
+        expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
   });
@@ -169,36 +122,15 @@ describe('controllerFactory', () => {
         await updateOne(req, res);
 
         expect(res.statusCode).toBe(200);
-        // const expectedMessage = {
-        //   status: 'success',
-        //   data: {
-        //     doc: {
-        //       price: '100'
-        //     }
-        //   }
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
-      });
-    });
-    describe('When an error is thrown from invalid id', () => {
-      it('should return a status code of 404 and a suitable message', async () => {
-        const database = databaseFactory(new MockModel());
-        const updateOne = controllerFactory.updateOneFactory(database);
-        const req = httpMocks.createRequest({
-          params: {
-            id: 'error'
+        const expectedMessage = {
+          status: 'success',
+          data: {
+            doc: {
+              price: '100'
+            }
           }
-        });
-        const res = httpMocks.createResponse();
-
-        await updateOne(req, res);
-
-        expect(res.statusCode).toBe(404);
-        // const expectedMessage = {
-        //   status: 'fail',
-        //   message: 'Test Error for findByIdAndUpdate'
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
+        };
+        expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
   });
@@ -222,27 +154,6 @@ describe('controllerFactory', () => {
           data: null
         };
         expect(res._getJSONData()).toEqual(expectedMessage);
-      });
-    });
-    describe('When an error is thrown from invalid id', () => {
-      it('should return a status code of 404 and a suitable message', async () => {
-        const database = databaseFactory(new MockModel());
-        const deleteOne = controllerFactory.deleteOneFactory(database);
-        const req = httpMocks.createRequest({
-          params: {
-            id: 'error'
-          }
-        });
-        const res = httpMocks.createResponse();
-
-        await deleteOne(req, res);
-
-        expect(res.statusCode).toBe(404);
-        // const expectedMessage = {
-        //   status: 'fail',
-        //   message: 'Test Error for findByIdAndDelete'
-        // };
-        // expect(res._getJSONData()).toEqual(expectedMessage);
       });
     });
   });

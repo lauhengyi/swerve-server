@@ -42,4 +42,41 @@ describe('errorController', () => {
       }
     });
   });
+  describe('When given an error with no statusCode or status', () => {
+    it('Should default statusCode to 500', () => {
+      const errs = [
+        new Error('Test Error'),
+        new Error('asldfjaklsdfad'),
+        new Error(''),
+        new Error('1234')
+      ];
+
+      for (let i = 0; i < errs.length; i++) {
+        const req = httpMocks.createRequest();
+        const res = httpMocks.createResponse();
+
+        errorController(errs[i], req, res);
+
+        expect(res.statusCode).toBe(500);
+      }
+    });
+
+    it('Should default status to "error"', () => {
+      const errs = [
+        new Error('Test Error'),
+        new Error('asldfjaklsdfad'),
+        new Error(''),
+        new Error('1234')
+      ];
+
+      for (let i = 0; i < errs.length; i++) {
+        const req = httpMocks.createRequest();
+        const res = httpMocks.createResponse();
+
+        errorController(errs[i], req, res);
+
+        expect(res._getJSONData().status).toBe('error');
+      }
+    });
+  });
 });
