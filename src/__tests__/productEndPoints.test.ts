@@ -120,6 +120,17 @@ describe('GET /products/:id', () => {
 
       expect(response.headers['content-type']).toMatch(/json/);
     });
+    it('Should respond with a status of "fail" and a message of "No document found with this ID"', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).get('/api/v1/products/notFound');
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'No document found with this ID'
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
   });
 });
 
@@ -245,6 +256,18 @@ describe('PATCH /products/:id', () => {
 
       expect(response.headers['content-type']).toMatch(/json/);
     });
+
+    it('Should respond with a status of "fail" and a message of "No document found with this ID"', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).patch('/api/v1/products/notFound');
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'No document found with this ID'
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
   });
 });
 
@@ -281,6 +304,18 @@ describe('DELETE /products/:id', () => {
       const response = await request(app).delete('/api/v1/products/notFound');
 
       expect(response.headers['content-type']).toMatch(/json/);
+    });
+
+    it('Should respond with a status of "fail" and a message of "No document found with this ID"', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).delete('/api/v1/products/notFound');
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'No document found with this ID'
+      };
+      expect(response.body).toEqual(expectedMessage);
     });
   });
 });

@@ -3,7 +3,7 @@ import AppError from '../../utils/AppError';
 import errorController from '../errorController';
 
 describe('errorController', () => {
-  describe('When given a suitable error with a statusCode, status and message ', () => {
+  describe('When given a suitable a given app error with statusCode and status', () => {
     it('Should return a response with the same statusCode', () => {
       const errs = [
         new AppError('Test Error', 400),
@@ -76,6 +76,28 @@ describe('errorController', () => {
         errorController(errs[i], req, res, jest.fn());
 
         expect(res._getJSONData().status).toBe('error');
+      }
+    });
+
+    it('Should respond with a status of "error" and a default message of "Something went wrong"', () => {
+      const errs = [
+        new Error('Test Error'),
+        new Error('asldfjaklsdfad'),
+        new Error(''),
+        new Error('1234')
+      ];
+      const expectedMessage = {
+        status: 'error',
+        message: 'Something went wrong'
+      };
+
+      for (let i = 0; i < errs.length; i++) {
+        const req = httpMocks.createRequest();
+        const res = httpMocks.createResponse();
+
+        errorController(errs[i], req, res, jest.fn());
+
+        expect(res._getJSONData()).toEqual(expectedMessage);
       }
     });
   });
