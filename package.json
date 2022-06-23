@@ -4,8 +4,9 @@
   "description": "An app that connects merchants with consumers.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/server.ts",
-    "test": "jest --verbose",
+    "dev": "nodemon src/server.ts",
+    "prod": "NODE_ENV=production nodemon src/server.ts",
+    "test": "jest",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
