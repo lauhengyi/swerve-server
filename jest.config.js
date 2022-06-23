@@ -5,5 +5,8 @@ module.exports = {
   testEnvironment: 'node',
   testRegex: './src/.*\\.(test|spec)?\\.(ts|ts)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  roots: ['<rootDir>/src']
+  roots: ['<rootDir>/src'],
+  transform: {
+    '^.+\\.(t|j)sx?$': ['@swc/jest']
+  }
 };
