@@ -49,4 +49,33 @@ describe('DELETE /products/:id', () => {
       expect(response.body).toEqual(expectedMessage);
     });
   });
+  describe('When the id is invalid', () => {
+    it('Should have a status code of 400', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).delete('/api/v1/products/invalidId');
+
+      expect(response.status).toBe(400);
+    });
+
+    it('Should return a content with a content-type of json', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).delete('/api/v1/products/invalidId');
+
+      expect(response.headers['content-type']).toMatch(/json/);
+    });
+
+    it('Should respond with a status of "fail" and a message of "Invalid id: ${invalidId}"', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app).delete('/api/v1/products/invalidId');
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'Invalid _id: invalidId'
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
+  });
 });

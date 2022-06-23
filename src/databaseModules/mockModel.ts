@@ -1,5 +1,6 @@
 import IModel from '../interfaces/IModel';
 import MockQuery from './MockQuery';
+import mongoose from 'mongoose';
 import { Request } from 'express';
 class MockModel implements IModel {
   calls = 0;
@@ -24,7 +25,9 @@ class MockModel implements IModel {
   findById(id: string) {
     this.calls++;
     if (id === 'invalidId') {
-      return Promise.reject(new Error('CastError'));
+      return Promise.reject(
+        new mongoose.Error.CastError('CastError', 'invalidId', '_id')
+      );
     } else if (id === 'notFound') {
       return Promise.resolve(null);
     } else {
@@ -35,7 +38,9 @@ class MockModel implements IModel {
   findByIdAndUpdate(id: string, payload: Request['body']) {
     this.calls++;
     if (id === 'invalidId') {
-      return Promise.reject(new Error('CastError'));
+      return Promise.reject(
+        new mongoose.Error.CastError('CastError', 'invalidId', '_id')
+      );
     } else if (id === 'notFound') {
       return Promise.resolve(null);
     } else {
@@ -46,7 +51,9 @@ class MockModel implements IModel {
   findByIdAndDelete(id: string) {
     this.calls++;
     if (id === 'invalidId') {
-      return Promise.reject(new Error('CastError'));
+      return Promise.reject(
+        new mongoose.Error.CastError('CastError', 'invalidId', '_id')
+      );
     } else if (id === 'notFound') {
       return Promise.resolve(null);
     } else {

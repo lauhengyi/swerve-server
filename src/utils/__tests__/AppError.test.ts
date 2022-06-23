@@ -61,7 +61,7 @@ describe('AppError', () => {
     it('Should not have itself within the stack trace', () => {
       const err = new AppError('Test Error', 500);
 
-      expect(err.stack).not.toMatch(/AppError/);
+      expect(err.stack).not.toMatch(/AppError.ts/);
     });
   });
 });

@@ -1,6 +1,7 @@
 import httpMocks from 'node-mocks-http';
 import AppError from '../../utils/AppError';
 import errorController from '../errorController';
+import mongoose from 'mongoose';
 
 describe('errorController', () => {
   describe('When given a suitable a given app error with statusCode and status', () => {
@@ -42,7 +43,8 @@ describe('errorController', () => {
       }
     });
   });
-  describe('When given an error with no statusCode or status', () => {
+
+  describe('When given a non-mongoose error with no statusCode or status', () => {
     it('Should default statusCode to 500', () => {
       const errs = [
         new Error('Test Error'),
@@ -99,6 +101,42 @@ describe('errorController', () => {
 
         expect(res._getJSONData()).toEqual(expectedMessage);
       }
+    });
+  });
+
+  describe('When given a mongoose CastError', () => {
+    it('Should have a statusCode of 400', () => {
+      const err = new mongoose.Error.CastError(
+        'CastError',
+        '12341231asdf',
+        '_id'
+      );
+
+      const req = httpMocks.createRequest();
+      const res = httpMocks.createResponse();
+
+      errorController(err, req, res, jest.fn());
+
+      expect(res.statusCode).toBe(400);
+    });
+
+    it('Should have a status of "error" and an a message "Invalid ${path}: ${inputedPathValue}', () => {
+      const err = new mongoose.Error.CastError(
+        'CastError',
+        '12341231asdf',
+        '_id'
+      );
+
+      const req = httpMocks.createRequest();
+      const res = httpMocks.createResponse();
+
+      errorController(err, req, res, jest.fn());
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'Invalid _id: 12341231asdf'
+      };
+      expect(res._getJSONData()).toEqual(expectedMessage);
     });
   });
 });

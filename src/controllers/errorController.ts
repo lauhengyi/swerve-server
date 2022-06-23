@@ -1,34 +1,31 @@
 import { NextFunction, Request, Response } from 'express';
+import mongoose from 'mongoose';
 import AppError from '../utils/AppError';
 
+const handleCastErrorDB = (err: mongoose.Error.CastError) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  return new AppError(message, 400);
+};
+
+type clientError = Error | AppError | mongoose.Error.CastError;
+
 const errorController = (
-  err: AppError | Error,
+  err: clientError,
   req: Request,
   res: Response,
   // Disabled cause the last variable is required for express to see this module as the error handler
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) => {
-  let statusCode: number;
-  let status: string;
-  let isOperational = false;
+  if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
 
-  // Setting default status as 'error' and default statusCode as 500
   if (err instanceof AppError) {
-    statusCode = err.statusCode;
-    status = err.status;
-    isOperational = true;
-  } else {
-    status = 'error';
-    statusCode = 500;
-  }
-
-  if (isOperational) {
-    res.status(statusCode).json({
-      status: status,
+    res.status(err.statusCode).json({
+      status: err.status,
       message: err.message
     });
   } else {
+    // console.error({ err });
     res.status(500).json({
       status: 'error',
       message: 'Something went wrong'
