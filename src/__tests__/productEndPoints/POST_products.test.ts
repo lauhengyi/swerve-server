@@ -82,4 +82,32 @@ describe('POST /products', () => {
       expect(response.body).toEqual(expectedMessage);
     });
   });
+
+  describe('When request product to be created as a duplicated field that needs to be unique', () => {
+    it('Should have a status code 400', async () => {
+      const app = makeApp(mockCollection);
+      const body = {
+        test: 'duplicateField'
+      };
+
+      const response = await request(app).post('/api/v1/products').send(body);
+
+      expect(response.status).toBe(400);
+    });
+
+    it('Should return a status of "fail" and a message stating the name and value of the duplicated field', async () => {
+      const app = makeApp(mockCollection);
+      const body = {
+        test: 'duplicateField'
+      };
+
+      const response = await request(app).post('/api/v1/products').send(body);
+
+      const expectedResponse = {
+        status: 'fail',
+        message: 'The username, "SpicyMeatball", is already taken'
+      };
+      expect(response.body).toEqual(expectedResponse);
+    });
+  });
 });

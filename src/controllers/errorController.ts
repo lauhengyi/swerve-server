@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import AppError from '../utils/AppError';
+import MongoServerError from '../databaseModules/MongoServerError';
 
 const handleCastErrorDB = (err: mongoose.Error.CastError) => {
   const message = `Invalid ${err.path}: ${err.value}`;
@@ -11,11 +12,24 @@ const handleValidationErrorDB = (err: mongoose.Error.ValidationError) => {
   return new AppError(err.message, 400);
 };
 
+const handleDuplicateFieldsDB = (err: MongoServerError) => {
+  const value = err.message.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
+  const name_1 = err.message.match(/\w*_1\b/);
+
+  if (!value || !name_1) return err;
+
+  const name = name_1[0].slice(0, -2);
+
+  const message = `The ${name}, ${value[0]}, is already taken`;
+  return new AppError(message, 400);
+};
+
 type clientError =
   | Error
   | AppError
   | mongoose.Error.CastError
-  | mongoose.Error.ValidationError;
+  | mongoose.Error.ValidationError
+  | MongoServerError;
 
 const errorController = (
   err: clientError,
@@ -28,6 +42,8 @@ const errorController = (
   if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
   if (err instanceof mongoose.Error.ValidationError)
     err = handleValidationErrorDB(err);
+  if (err.name === 'MongoServerError' && 'code' in err && err.code === 11000)
+    err = handleDuplicateFieldsDB(err);
 
   if (err instanceof AppError) {
     res.status(err.statusCode).json({

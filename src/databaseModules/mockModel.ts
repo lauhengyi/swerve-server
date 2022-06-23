@@ -1,6 +1,7 @@
 import IModel from '../interfaces/IModel';
 import MockQuery from './MockQuery';
 import mongoose from 'mongoose';
+import MongoServerError from './MongoServerError';
 import { Request } from 'express';
 class MockModel implements IModel {
   calls = 0;
@@ -9,6 +10,13 @@ class MockModel implements IModel {
     this.calls++;
     if (payload?.test === 'error') {
       return Promise.reject(new mongoose.Error.ValidationError());
+    } else if (payload?.test === 'duplicateField') {
+      return Promise.reject(
+        new MongoServerError(
+          'E11000 duplicate key error collection: test.products index: username_1 dup key: { username: "SpicyMeatball" }',
+          11000
+        )
+      );
     } else {
       return Promise.resolve(payload);
     }
@@ -45,6 +53,13 @@ class MockModel implements IModel {
       return Promise.resolve(null);
     } else if (payload?.test === 'error') {
       return Promise.reject(new mongoose.Error.ValidationError());
+    } else if (payload?.test === 'duplicateField') {
+      return Promise.reject(
+        new MongoServerError(
+          'E11000 duplicate key error collection: test.products index: username_1 dup key: { username: "SpicyMeatball" }',
+          11000
+        )
+      );
     } else {
       return Promise.resolve(payload);
     }

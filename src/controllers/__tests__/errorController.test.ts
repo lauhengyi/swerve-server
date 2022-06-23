@@ -2,6 +2,7 @@ import httpMocks from 'node-mocks-http';
 import AppError from '../../utils/AppError';
 import errorController from '../errorController';
 import mongoose from 'mongoose';
+import MongoServerError from '../../databaseModules/MongoServerError';
 
 describe('errorController', () => {
   describe('When given a suitable a given app error with statusCode and status', () => {
@@ -163,6 +164,61 @@ describe('errorController', () => {
         message: 'Validation failed'
       };
       expect(res._getJSONData()).toEqual(expectedMessage);
+    });
+  });
+
+  describe('When given a mongoDB duplicate key error', () => {
+    it('Should have a statusCode of 400', () => {
+      const err1 = new MongoServerError(
+        'E11000 duplicate key error collection: test.products index: name_1 dup key: { name: "Super oddfs" }',
+        11000
+      );
+      const err2 = new MongoServerError(
+        'E11000 duplicate key error collection: test.products index: username_1 dup key: { username: "SpicyMeatball" }',
+        11000
+      );
+      const errs = [err1, err2];
+
+      for (let i = 0; i < errs.length; i++) {
+        const req = httpMocks.createRequest();
+        const res = httpMocks.createResponse();
+
+        errorController(errs[i], req, res, jest.fn());
+
+        expect(res.statusCode).toBe(400);
+      }
+    });
+
+    it('Should have a status of "fail" and a message stating the name of the duplicated field and the value that was duplicated', () => {
+      const err1 = new MongoServerError(
+        'E11000 duplicate key error collection: test.products index: name_1 dup key: { name: "Super oddfs" }',
+        11000
+      );
+      const err2 = new MongoServerError(
+        'E11000 duplicate key error collection: test.products index: username_1 dup key: { username: "SpicyMeatball" }',
+        11000
+      );
+      const errs = [err1, err2];
+
+      const expectedResponses = [
+        {
+          status: 'fail',
+          message: 'The name, "Super oddfs", is already taken'
+        },
+        {
+          status: 'fail',
+          message: 'The username, "SpicyMeatball", is already taken'
+        }
+      ];
+
+      for (let i = 0; i < errs.length; i++) {
+        const req = httpMocks.createRequest();
+        const res = httpMocks.createResponse();
+
+        errorController(errs[i], req, res, jest.fn());
+
+        expect(res._getJSONData()).toEqual(expectedResponses[i]);
+      }
     });
   });
 });
