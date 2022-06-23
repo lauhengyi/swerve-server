@@ -139,4 +139,30 @@ describe('errorController', () => {
       expect(res._getJSONData()).toEqual(expectedMessage);
     });
   });
+
+  describe('When given a mongoose ValidationError', () => {
+    it('Should have a statusCode of 400', () => {
+      const err = new mongoose.Error.ValidationError();
+      const req = httpMocks.createRequest();
+      const res = httpMocks.createResponse();
+
+      errorController(err, req, res, jest.fn());
+
+      expect(res.statusCode).toBe(400);
+    });
+
+    it('Should have a status of fail and a message of the same message as the original error', () => {
+      const err = new mongoose.Error.ValidationError();
+      const req = httpMocks.createRequest();
+      const res = httpMocks.createResponse();
+
+      errorController(err, req, res, jest.fn());
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'Validation failed'
+      };
+      expect(res._getJSONData()).toEqual(expectedMessage);
+    });
+  });
 });

@@ -44,7 +44,7 @@ describe('POST /products', () => {
     });
   });
 
-  describe('When a request is invalid', () => {
+  describe('When requested product to be created is invalid', () => {
     it('Should have a status code 400', async () => {
       const app = makeApp(mockCollection);
       const body = {
@@ -65,6 +65,21 @@ describe('POST /products', () => {
       const response = await request(app).post('/api/v1/products').send(body);
 
       expect(response.headers['content-type']).toMatch(/json/);
+    });
+
+    it('Should respond with a status of "fail" and and a appropriate message', async () => {
+      const app = makeApp(mockCollection);
+      const body = {
+        test: 'error'
+      };
+
+      const response = await request(app).post('/api/v1/products').send(body);
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'Validation failed'
+      };
+      expect(response.body).toEqual(expectedMessage);
     });
   });
 });

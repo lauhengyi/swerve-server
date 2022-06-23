@@ -73,6 +73,7 @@ describe('PATCH /products/:id', () => {
       expect(response.body).toEqual(expectedMessage);
     });
   });
+
   describe('When the id is invalid', () => {
     it('Should have a status code of 400', async () => {
       const app = makeApp(mockCollection);
@@ -98,6 +99,42 @@ describe('PATCH /products/:id', () => {
       const expectedMessage = {
         status: 'fail',
         message: 'Invalid _id: invalidId'
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
+  });
+
+  describe('When the requested product to be updated is invalid', () => {
+    it('Should have a status code of 400', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app)
+        .patch('/api/v1/products/testID')
+        .send({ test: 'error' });
+
+      expect(response.status).toBe(400);
+    });
+
+    it('Should return a content with a content type of json ', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app)
+        .patch('/api/v1/products/testID')
+        .send({ test: 'error' });
+
+      expect(response.headers['content-type']).toMatch(/json/);
+    });
+
+    it('Should respond with a status of "fail" and a appriopriate message', async () => {
+      const app = makeApp(mockCollection);
+
+      const response = await request(app)
+        .patch('/api/v1/products/testID')
+        .send({ test: 'error' });
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'Validation failed'
       };
       expect(response.body).toEqual(expectedMessage);
     });

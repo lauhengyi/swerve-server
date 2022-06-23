@@ -42,26 +42,4 @@ describe('GET /products', () => {
       expect(response.body).toEqual(expectedMessage);
     });
   });
-
-  describe('When a request is invalid', () => {
-    it('Should have a status code 404', async () => {
-      const app = makeApp(mockCollection);
-
-      const response = await request(app)
-        .get('/api/v1/products')
-        .query({ test: 'error' });
-
-      expect(response.status).toBe(404);
-    });
-
-    it('Should return a content with a content-type of json', async () => {
-      const app = makeApp(mockCollection);
-
-      const response = await request(app)
-        .get('/api/v1/products')
-        .query({ test: 'error' });
-
-      expect(response.headers['content-type']).toMatch(/json/);
-    });
-  });
 });

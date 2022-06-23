@@ -7,7 +7,15 @@ const handleCastErrorDB = (err: mongoose.Error.CastError) => {
   return new AppError(message, 400);
 };
 
-type clientError = Error | AppError | mongoose.Error.CastError;
+const handleValidationErrorDB = (err: mongoose.Error.ValidationError) => {
+  return new AppError(err.message, 400);
+};
+
+type clientError =
+  | Error
+  | AppError
+  | mongoose.Error.CastError
+  | mongoose.Error.ValidationError;
 
 const errorController = (
   err: clientError,
@@ -18,6 +26,8 @@ const errorController = (
   next: NextFunction
 ) => {
   if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
+  if (err instanceof mongoose.Error.ValidationError)
+    err = handleValidationErrorDB(err);
 
   if (err instanceof AppError) {
     res.status(err.statusCode).json({

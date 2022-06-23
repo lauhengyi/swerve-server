@@ -8,7 +8,7 @@ class MockModel implements IModel {
   create(payload: Request['body']) {
     this.calls++;
     if (payload?.test === 'error') {
-      return Promise.reject(new Error('Test Error for create'));
+      return Promise.reject(new mongoose.Error.ValidationError());
     } else {
       return Promise.resolve(payload);
     }
@@ -43,6 +43,8 @@ class MockModel implements IModel {
       );
     } else if (id === 'notFound') {
       return Promise.resolve(null);
+    } else if (payload?.test === 'error') {
+      return Promise.reject(new mongoose.Error.ValidationError());
     } else {
       return Promise.resolve(payload);
     }
