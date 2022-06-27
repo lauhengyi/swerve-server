@@ -39,6 +39,7 @@ const errorController = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) => {
+  console.log(err);
   if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
   if (err instanceof mongoose.Error.ValidationError)
     err = handleValidationErrorDB(err);
@@ -54,7 +55,8 @@ const errorController = (
     // console.error({ err });
     res.status(500).json({
       status: 'error',
-      message: 'Something went wrong'
+      message: 'Something went wrong',
+      err: err.message
     });
   }
 };

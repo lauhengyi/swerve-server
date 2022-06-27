@@ -4,4 +4,8 @@ export default interface IProduct {
   description: string;
   category: number;
   subCategory?: number;
+  coverImage: string;
+  images: string[];
+  numLikes: number;
+  dateUpdated: Date;
 }

@@ -82,26 +82,19 @@ describe('errorController', () => {
       }
     });
 
-    it('Should respond with a status of "error" and a default message of "Something went wrong"', () => {
-      const errs = [
-        new Error('Test Error'),
-        new Error('asldfjaklsdfad'),
-        new Error(''),
-        new Error('1234')
-      ];
+    it('Should respond with a status of "error" and a default message of "Something went wrong", and the unhandled error message', () => {
+      const err = new Error('Test Error');
+      const req = httpMocks.createRequest();
+      const res = httpMocks.createResponse();
+
+      errorController(err, req, res, jest.fn());
+
       const expectedMessage = {
         status: 'error',
-        message: 'Something went wrong'
+        message: 'Something went wrong',
+        err: 'Test Error'
       };
-
-      for (let i = 0; i < errs.length; i++) {
-        const req = httpMocks.createRequest();
-        const res = httpMocks.createResponse();
-
-        errorController(errs[i], req, res, jest.fn());
-
-        expect(res._getJSONData()).toEqual(expectedMessage);
-      }
+      expect(res._getJSONData()).toEqual(expectedMessage);
     });
   });
 

@@ -21,6 +21,22 @@ const productSchema = new mongoose.Schema({
   },
   subCategory: {
     type: Number
+  },
+  coverImage: {
+    type: String,
+    required: [true, 'Product cover image is required']
+  },
+  images: {
+    type: [String]
+  },
+  numLikes: {
+    type: Number,
+    default: 0
+  },
+  dateUpdated: {
+    type: Date,
+    default: Date.now(),
+    required: [true, 'Product date updated is required']
   }
 });
 
