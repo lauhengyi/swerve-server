@@ -39,7 +39,6 @@ const errorController = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) => {
-  console.log(err);
   if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
   if (err instanceof mongoose.Error.ValidationError)
     err = handleValidationErrorDB(err);
