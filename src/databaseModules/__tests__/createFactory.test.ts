@@ -21,7 +21,13 @@ describe('CreateFactory', () => {
         help: 'me'
       };
 
-      expect(await create(payload)).toEqual(payload);
+      const expectedMessage = {
+        _id: 'testId',
+        name: 'Test',
+        description: 'This is a test',
+        help: 'me'
+      };
+      expect(await create(payload)).toEqual(expectedMessage);
     });
   });
 });

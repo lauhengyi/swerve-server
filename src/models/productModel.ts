@@ -1,5 +1,20 @@
-import mongoose from 'mongoose';
-import IProduct from '../interfaces/IProduct';
+import mongoose, { Types } from 'mongoose';
+
+interface IProduct {
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  subCategory?: string;
+  coverImage: string;
+  images: string[];
+  dateUpdated: Date;
+}
+
+interface IProductStored extends IProduct {
+  _id: Types.ObjectId;
+  __v: number;
+}
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -16,11 +31,11 @@ const productSchema = new mongoose.Schema({
     trim: true
   },
   category: {
-    type: Number,
+    type: String,
     required: [true, 'Product category is required']
   },
   subCategory: {
-    type: Number
+    type: String
   },
   coverImage: {
     type: String,
@@ -28,10 +43,6 @@ const productSchema = new mongoose.Schema({
   },
   images: {
     type: [String]
-  },
-  numLikes: {
-    type: Number,
-    default: 0
   },
   dateUpdated: {
     type: Date,
@@ -43,3 +54,4 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model<IProduct>('Product', productSchema);
 
 export default Product;
+export { IProduct, IProductStored };

@@ -18,7 +18,7 @@ class MockModel implements IModel {
         )
       );
     } else {
-      return Promise.resolve(payload);
+      return Promise.resolve({ _id: 'testId', ...payload });
     }
   }
 

@@ -37,7 +37,10 @@ describe('POST /products', () => {
       const expectedMessage = {
         status: 'success',
         data: {
-          doc: body
+          doc: {
+            _id: 'testId',
+            name: 'Test'
+          }
         }
       };
       expect(response.body).toEqual(expectedMessage);

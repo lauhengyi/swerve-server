@@ -21,7 +21,10 @@ describe('controllerFactory', () => {
         const expectedMessage = {
           status: 'success',
           data: {
-            doc: payload
+            doc: {
+              _id: 'testId',
+              name: 'Test'
+            }
           }
         };
         expect(res._getJSONData()).toEqual(expectedMessage);
