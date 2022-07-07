@@ -1,5 +1,4 @@
-import makeApp from '../../makeApp';
-import collection from '../../databaseModules/collection';
+import app from '../../app';
 import request from 'supertest';
 import testDBSetup from '../../testUtils/testDBSetup';
 
@@ -8,7 +7,6 @@ testDBSetup();
 describe('POST /products', () => {
   describe('when the request is valid', () => {
     it('Should have a status code 201', async () => {
-      const app = makeApp(collection);
       const body = {
         name: 'Test name',
         price: 10,
@@ -23,7 +21,6 @@ describe('POST /products', () => {
   });
 
   it('Should return a content with a content-type of json', async () => {
-    const app = makeApp(collection);
     const body = {
       name: 'Test name',
       price: 10,
@@ -38,7 +35,6 @@ describe('POST /products', () => {
   });
 
   it('Should return a message with a status success and the data of the created document ', async () => {
-    const app = makeApp(collection);
     const body = {
       name: 'Test name',
       price: 10,
@@ -70,7 +66,6 @@ describe('POST /products', () => {
 
   describe('When requested product to be created is invalid', () => {
     it('Should have a status code 400', async () => {
-      const app = makeApp(collection);
       const body = {
         test: 'error'
       };
@@ -81,7 +76,6 @@ describe('POST /products', () => {
     });
 
     it('Should return a content with a content-type of json', async () => {
-      const app = makeApp(collection);
       const body = {
         test: 'error'
       };
@@ -92,7 +86,6 @@ describe('POST /products', () => {
     });
 
     it('Should respond with a status of "fail" and and a appropriate message', async () => {
-      const app = makeApp(collection);
       const body = {
         test: 'error'
       };

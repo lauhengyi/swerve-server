@@ -1,24 +1,18 @@
 import express from 'express';
-import IDatabase from '../interfaces/IDatabase';
-import controllerFactory from '../controllers/controllerFactory';
+import productController from '../controllers/productController';
 
 // eslint-disable-next-line new-cap
-const productRoutes = (database: IDatabase): express.Router => {
-  // eslint-disable-next-line new-cap
-  const router = express.Router();
+const router = express.Router();
 
-  router
-    .route('/')
-    .get(controllerFactory.queryAllFactory(database))
-    .post(controllerFactory.createOneFactory(database));
+router
+  .route('/')
+  .get(productController.queryAllProducts)
+  .post(productController.createProduct);
 
-  router
-    .route('/:id')
-    .get(controllerFactory.getOneFactory(database))
-    .patch(controllerFactory.updateOneFactory(database))
-    .delete(controllerFactory.deleteOneFactory(database));
+router
+  .route('/:id')
+  .get(productController.getProductById)
+  .patch(productController.updateProduct)
+  .delete(productController.deleteProduct);
 
-  return router;
-};
-
-export default productRoutes;
+export default router;

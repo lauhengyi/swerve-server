@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import makeApp from './makeApp';
-import collection from './databaseModules/collection';
+import app from './app';
 
 // Catch uncaught exceptions
 process.on('uncaughtException', (err) => {
@@ -26,7 +25,6 @@ mongoose.connect(DB).then(() => console.log('DB connection successful!'));
 
 // Start server
 const port = process.env.PORT || 3000;
-const app = makeApp(collection);
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });

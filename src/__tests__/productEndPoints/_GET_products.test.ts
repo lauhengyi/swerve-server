@@ -1,5 +1,4 @@
-import makeApp from '../../makeApp';
-import collection from '../../databaseModules/collection';
+import app from '../../app';
 import request from 'supertest';
 import testDBSetup from '../../testUtils/testDBSetup';
 
@@ -8,8 +7,6 @@ testDBSetup();
 describe('GET /products', () => {
   describe('When the request is valid and there is no results', () => {
     it('Should have a status code 200', async () => {
-      const app = makeApp(collection);
-
       const response = await request(app)
         .get('/api/v1/products')
         .query({ sort: 'price' });
@@ -18,8 +15,6 @@ describe('GET /products', () => {
     });
 
     it('Should return a content with a content-type of json', async () => {
-      const app = makeApp(collection);
-
       const response = await request(app)
         .get('/api/v1/products')
         .query({ sort: 'price' });
@@ -28,8 +23,6 @@ describe('GET /products', () => {
     });
 
     it('Should return a message with a status success and an empty array', async () => {
-      const app = makeApp(collection);
-
       const response = await request(app)
         .get('/api/v1/products')
         .query({ sort: 'price' });
@@ -48,7 +41,6 @@ describe('GET /products', () => {
 
   describe('When the request is valid and there is some results', () => {
     it('Should have a status code 200', async () => {
-      const app = makeApp(collection);
       const body1 = {
         name: 'Test name',
         price: 10,
@@ -74,7 +66,6 @@ describe('GET /products', () => {
     });
 
     it('Should return a content with a content-type of json', async () => {
-      const app = makeApp(collection);
       const body1 = {
         name: 'Test name',
         price: 10,
@@ -100,7 +91,6 @@ describe('GET /products', () => {
     });
 
     it('Should return a message with a status success and a list of products sorted without the __v property', async () => {
-      const app = makeApp(collection);
       const body1 = {
         name: 'Test name',
         price: 50,
