@@ -1,8 +1,8 @@
 import controllerFactory from './controllerFactory';
 import Product from '../models/productModel';
-import databaseFactory from '../databaseModules/databaseFactory';
+import Database from '../databaseModules/Database';
 
-const productDatabase = databaseFactory(Product);
+const productDatabase = new Database(Product);
 
 const createProduct = controllerFactory.createOneFactory(productDatabase);
 

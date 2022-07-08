@@ -1,6 +1,18 @@
 import mongoose from 'mongoose';
-import IUser from '../interfaces/IUser';
 import isEmail from 'validator/es/lib/isEmail';
+
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+  profileImage: string;
+  followedShops: string[];
+  accountType: 'regular' | 'merchant';
+  ownedShops: string[];
+  dateCreated: Date;
+  isPublic: boolean;
+  isAdmin: boolean;
+}
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -24,19 +36,23 @@ const userSchema = new mongoose.Schema({
   },
   profileImage: {
     type: String,
-    required: [true, 'Profile image is required']
+    default: './default-profile-image.png'
   },
   followedShops: {
-    type: [String],
-    default: []
-  },
-  starredProducts: {
     type: [String],
     default: []
   },
   ownedShops: {
     type: [String],
     default: []
+  },
+  accountType: {
+    type: String,
+    required: true,
+    enum: {
+      values: ['regular', 'merchant'],
+      message: 'Account type must be either regular or merchant'
+    }
   },
   dateCreated: {
     type: Date,

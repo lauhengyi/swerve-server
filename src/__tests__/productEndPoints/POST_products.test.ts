@@ -46,20 +46,17 @@ describe('POST /products', () => {
     const response = await request(app).post('/api/v1/products').send(body);
 
     expect(response.body.status).toBe('success');
-    expect(response.body.data.doc).toHaveProperty('_id');
-    expect(response.body.data.doc).toHaveProperty('__v');
-    expect(response.body.data.doc).toHaveProperty('dateUpdated');
-    delete response.body.data.doc._id;
-    delete response.body.data.doc.__v;
-    delete response.body.data.doc.dateUpdated;
 
     const expectedDoc = {
+      _id: expect.any(String),
+      __v: expect.any(Number),
       name: 'Test name',
       price: 10,
       description: 'This is a test price',
       coverImage: './test',
       images: [],
-      category: 'Umbrella'
+      category: 'Umbrella',
+      dateUpdated: expect.any(String)
     };
     expect(response.body.data.doc).toEqual(expectedDoc);
   });
