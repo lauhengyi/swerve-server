@@ -2,6 +2,7 @@ import express from 'express';
 import errorController from './controllers/errorController';
 import AppError from './utils/AppError';
 import productRoutes from './routes/productRoutes';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Routes
 const apiString = '/api/v1';
+app.use(`${apiString}/users`, userRoutes);
 app.use(`${apiString}/products`, productRoutes);
 
 // Catch all unhandled requests and return 404

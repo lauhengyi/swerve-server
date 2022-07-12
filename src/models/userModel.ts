@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import isEmail from 'validator/es/lib/isEmail';
+import isEmail from 'validator/lib/isEmail';
+import bcrypt from 'bcryptjs';
 
 interface IUser {
   username: string;
@@ -66,6 +67,17 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
+});
+
+userSchema.pre('save', async function (next) {
+  // Only hash password if it has been modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with a salt of 12
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // Remove passwordConfirm field
+  this.passwordConfirm = undefined;
 });
 
 const User = mongoose.model<IUser>('User', userSchema);

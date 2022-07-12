@@ -1,4 +1,4 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 interface IProduct {
   name: string;
@@ -9,11 +9,6 @@ interface IProduct {
   coverImage: string;
   images: string[];
   dateUpdated: Date;
-}
-
-interface IProductStored extends IProduct {
-  _id: Types.ObjectId;
-  __v: number;
 }
 
 const productSchema = new mongoose.Schema({
