@@ -1,12 +1,13 @@
-import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
 
 const testDBSetup = () => {
-  let mongod: MongoMemoryServer;
   // Connect to the in-memory database.
   const connect = async () => {
-    mongod = await MongoMemoryServer.create();
-    const uri = mongod.getUri();
+    if (!globalThis.__MONGOD__) {
+      globalThis.__MONGOD__ = await MongoMemoryServer.create();
+    }
+    const uri = globalThis.__MONGOD__.getUri();
     await mongoose.connect(uri);
   };
 
@@ -24,7 +25,6 @@ const testDBSetup = () => {
   const closeDatabase = async () => {
     await mongoose.connection.dropDatabase();
     await mongoose.disconnect();
-    await mongod.stop();
   };
 
   beforeAll(connect);

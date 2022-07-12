@@ -8,5 +8,8 @@ module.exports = {
   roots: ['<rootDir>/src'],
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest']
-  }
+  },
+
+  globalSetup: './src/testUtils/globalSetup.ts',
+  globalTeardown: './src/testUtils/globalTeardown.ts'
 };
