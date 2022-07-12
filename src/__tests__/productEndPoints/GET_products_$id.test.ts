@@ -94,7 +94,7 @@ describe('GET /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'No document found with this ID'
+        message: 'No document found with this ID.'
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -117,7 +117,7 @@ describe('GET /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid _id: invalidId'
+        message: 'Invalid _id: invalidId.'
       };
       expect(response.body).toEqual(expectedMessage);
     });

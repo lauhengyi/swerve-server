@@ -92,7 +92,7 @@ describe('POST /products', () => {
       const expectedMessage = {
         status: 'fail',
         message:
-          'Product validation failed: coverImage: Product cover image is required, category: Product category is required, price: Product price is required, name: Product name is required'
+          'Product cover image is required. Product category is required. Product price is required. Product name is required.'
       };
       expect(response.body).toEqual(expectedMessage);
     });

@@ -19,7 +19,7 @@ const getOneFactory = <T>(database: Database<T>) =>
     const doc = await database.find(req.params.id);
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('No document found with this ID.', 404));
     }
 
     res.status(200).json({
@@ -35,7 +35,7 @@ const queryAllFactory = <T>(database: Database<T>) =>
     const doc = await database.query(req.query);
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('No document found with this ID.', 404));
     }
 
     res.status(200).json({
@@ -52,7 +52,7 @@ const updateOneFactory = <T>(database: Database<T>) =>
     const doc = await database.update(req.params.id, req.body);
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('No document found with this ID.', 404));
     }
 
     res.status(200).json({
@@ -68,7 +68,7 @@ const deleteOneFactory = <T>(database: Database<T>) =>
     const doc = await database.delete(req.params.id);
 
     if (!doc) {
-      return next(new AppError('No document found with this ID', 404));
+      return next(new AppError('No document found with this ID.', 404));
     }
 
     res.status(204).json({

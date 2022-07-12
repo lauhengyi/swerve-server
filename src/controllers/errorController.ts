@@ -4,12 +4,18 @@ import AppError from '../utils/AppError';
 import MongoServerError from '../databaseModules/MongoServerError';
 
 const handleCastErrorDB = (err: mongoose.Error.CastError) => {
-  const message = `Invalid ${err.path}: ${err.value}`;
+  const message = `Invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 
 const handleValidationErrorDB = (err: mongoose.Error.ValidationError) => {
-  return new AppError(err.message, 400);
+  let message = '';
+  Object.keys(err.errors).forEach((key) => {
+    message += err.errors[key].message + ' ';
+  });
+  // Remove last space
+  message = message.slice(0, -1);
+  return new AppError(message, 400);
 };
 
 const handleDuplicateFieldsDB = (err: MongoServerError) => {
@@ -20,7 +26,7 @@ const handleDuplicateFieldsDB = (err: MongoServerError) => {
 
   const name = name_1[0].slice(0, -2);
 
-  const message = `The ${name}, ${value[0]}, is already taken`;
+  const message = `The ${name}, ${value[0]}, is already taken.`;
   return new AppError(message, 400);
 };
 
@@ -54,7 +60,7 @@ const errorController = (
     // console.error({ err });
     res.status(500).json({
       status: 'error',
-      message: 'Something went wrong',
+      message: 'Something went wrong.',
       err: err.message
     });
   }

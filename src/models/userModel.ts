@@ -18,22 +18,22 @@ interface IUser {
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, 'Username is required'],
+    required: [true, 'Username is required.'],
     unique: true
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
+    required: [true, 'Email is required.'],
     unique: true,
-    validator: [isEmail, 'Invalid email']
+    validate: [isEmail, 'Invalid email.']
   },
   password: {
     type: String,
-    required: [true, 'Password is required']
+    required: [true, 'Password is required.']
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'Password confirmation is required']
+    required: [true, 'Password confirmation is required.']
   },
   profileImage: {
     type: String,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: {
       values: ['regular', 'merchant'],
-      message: 'Account type must be either regular or merchant'
+      message: 'Account type must be either regular or merchant.'
     }
   },
   dateCreated: {

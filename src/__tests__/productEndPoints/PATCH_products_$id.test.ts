@@ -92,14 +92,14 @@ describe('PATCH /products/:id', () => {
       expect(response.headers['content-type']).toMatch(/json/);
     });
 
-    it('Should respond with a status of "fail" and a message of "No document found with this ID"', async () => {
+    it('Should respond with a status of "fail" and a message of "No document found with this ID."', async () => {
       const response = await request(app).patch(
         '/api/v1/products/507f1f77bcf86cd799439011'
       );
 
       const expectedMessage = {
         status: 'fail',
-        message: 'No document found with this ID'
+        message: 'No document found with this ID.'
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -123,7 +123,7 @@ describe('PATCH /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid _id: invalidId'
+        message: 'Invalid _id: invalidId.'
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -189,7 +189,7 @@ describe('PATCH /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid price: error'
+        message: 'Invalid price: error.'
       };
       expect(response.body).toEqual(expectedMessage);
     });
