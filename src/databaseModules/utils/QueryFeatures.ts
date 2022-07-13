@@ -1,14 +1,12 @@
-import IQuery from '../../interfaces/IQuery';
 import getFilterObj from './getFilterObj';
 import formatProperties from './formatProperties';
+import { QueryOptions, Query } from 'mongoose';
 
-class QueryFeatures {
-  query: IQuery;
-  // queryParams come from the client. Can be any object.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  queryParams: any;
+class QueryFeatures<T> {
+  query: Query<T[], T>;
+  queryParams: QueryOptions;
 
-  constructor(query: IQuery, queryParams: object) {
+  constructor(query: Query<T[], T>, queryParams: QueryOptions) {
     this.query = query;
     this.queryParams = queryParams;
   }
@@ -38,8 +36,12 @@ class QueryFeatures {
   }
 
   paginate() {
-    const page: number = this.queryParams.page * 1 || 1;
-    const limit: number = this.queryParams.limit * 1 || 100;
+    const page: number = this.queryParams.page ? this.queryParams.page * 1 : 1;
+
+    const limit: number = this.queryParams.limit
+      ? this.queryParams.limit * 1
+      : 100;
+
     const skip = (page - 1) * limit;
 
     this.query = this.query.skip(skip).limit(limit);
