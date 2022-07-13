@@ -7,9 +7,6 @@ testDBSetup();
 describe('POST users/signup', () => {
   describe('When the request is valid', () => {
     it('It should return a status code of 201', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -25,9 +22,6 @@ describe('POST users/signup', () => {
       expect(response.status).toBe(201);
     });
     it('It should return a status of success, the JWT token and the data of the user created, and the password is not stored as plain text', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -68,9 +62,6 @@ describe('POST users/signup', () => {
 
   describe('When you try to create a user with an existing username', () => {
     it('It should return a status code of 400', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -95,9 +86,6 @@ describe('POST users/signup', () => {
       expect(response.status).toBe(400);
     });
     it('It should return a status of fail and a message stating the username that is taken', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -129,9 +117,6 @@ describe('POST users/signup', () => {
   });
   describe('When you try to create a user with an invalid email', () => {
     it('It should return a status code of 400', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmillmail.com',
@@ -148,9 +133,6 @@ describe('POST users/signup', () => {
     });
 
     it('It should return a status of fail and a message "Invalid email."', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmillmail@com',
@@ -172,9 +154,6 @@ describe('POST users/signup', () => {
   });
   describe('When you try to create a user with an existing email', () => {
     it('It should return a status code of 400', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -200,9 +179,6 @@ describe('POST users/signup', () => {
     });
 
     it('It should return a status of fail and a message stating the email that is taken', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -234,9 +210,6 @@ describe('POST users/signup', () => {
   });
   describe('When the password is not the same as the passwordConfirm', () => {
     it('It should return a status code of 400', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -253,9 +226,6 @@ describe('POST users/signup', () => {
     });
 
     it('It should return a status of fail and a message "Passwords are not the same."', async () => {
-      // Environment variables
-      process.env.JWT_SECRET = 'secret';
-      process.env.JWT_EXPIRES_IN = '15min';
       const body = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
