@@ -11,7 +11,7 @@ export default class Database<T> {
     return await this.model.create(payload);
   }
 
-  async find(id: string) {
+  async findById(id: string) {
     return await this.model.findById(id);
   }
 
