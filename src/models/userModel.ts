@@ -6,16 +6,23 @@ interface IUser {
   username: string;
   email: string;
   password: string;
+  passwordConfirm?: string;
   profileImage: string;
   followedShops: string[];
   accountType: 'regular' | 'merchant';
   ownedShops: string[];
-  dateCreated: Date;
+  dateCreated: number;
   isPublic: boolean;
   isAdmin: boolean;
 }
 
-const userSchema = new mongoose.Schema({
+interface IUserMethods {
+  comparePassword: (givenPassword: string) => Promise<boolean>;
+}
+
+type UserModel = mongoose.Model<IUser, object, IUserMethods>;
+
+const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: [true, 'Username is required.'],
@@ -63,7 +70,7 @@ const userSchema = new mongoose.Schema({
     }
   },
   dateCreated: {
-    type: Date,
+    type: Number,
     default: Date.now()
   },
   isPublic: {
@@ -87,6 +94,10 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
+userSchema.methods.comparePassword = async function (givenPassword: string) {
+  return await bcrypt.compare(givenPassword, this.password);
+};
+
+const User = mongoose.model<IUser, UserModel>('User', userSchema);
 
 export default User;

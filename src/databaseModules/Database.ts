@@ -1,9 +1,9 @@
 import QueryFeatures from './utils/queryFeatures';
-import { Model } from 'mongoose';
+import { Model, QueryOptions } from 'mongoose';
 
-export default class Database<T> {
-  model: Model<T>;
-  constructor(model: Model<T>) {
+export default class Database<X, Y, Z> {
+  model: Model<X, Y, Z>;
+  constructor(model: Model<X, Y, Z>) {
     this.model = model;
   }
 
@@ -15,7 +15,11 @@ export default class Database<T> {
     return await this.model.findById(id);
   }
 
-  async query(queryParams: object) {
+  async findOne(queryParams: QueryOptions) {
+    return await this.model.findOne(queryParams);
+  }
+
+  async query(queryParams: QueryOptions) {
     const queryObj = new QueryFeatures(this.model.find(), queryParams)
       .filter()
       .sort()

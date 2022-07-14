@@ -48,7 +48,7 @@ describe('POST users/signup', () => {
             followedShops: [],
             accountType: 'regular',
             ownedShops: [],
-            dateCreated: expect.any(String),
+            dateCreated: expect.any(Number),
             isPublic: false,
             isAdmin: false
           }

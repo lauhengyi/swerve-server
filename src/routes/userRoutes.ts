@@ -4,7 +4,10 @@ import authController from '../controllers/authController';
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-router.route('/signup').post(authController.signup);
+router.route('/signup').post(authController.signUp);
+
+router.route('/login').get(authController.logIn);
+
 // router
 //   .route('/')
 //   .get(productController.queryAllProducts)
