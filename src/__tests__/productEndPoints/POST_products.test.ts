@@ -56,7 +56,7 @@ describe('POST /products', () => {
       coverImage: './test',
       images: [],
       category: 'Umbrella',
-      dateUpdated: expect.any(String)
+      dateUpdated: expect.any(Number)
     };
     expect(response.body.data.doc).toEqual(expectedDoc);
   });

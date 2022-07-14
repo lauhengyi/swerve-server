@@ -8,10 +8,10 @@ interface IProduct {
   subCategory?: string;
   coverImage: string;
   images: string[];
-  dateUpdated: Date;
+  dateUpdated: number;
 }
 
-const productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema<IProduct>({
   name: {
     type: String,
     required: [true, 'Product name is required.'],
@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     type: [String]
   },
   dateUpdated: {
-    type: Date,
+    type: Number,
     default: Date.now(),
     required: [true, 'Product date updated is required.']
   }
