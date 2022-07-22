@@ -1,5 +1,5 @@
 {
-  "name": "swerve",
+  "name": "swerve-server",
   "version": "1.0.0",
   "description": "An app that connects merchants with consumers.",
   "main": "server.js",
