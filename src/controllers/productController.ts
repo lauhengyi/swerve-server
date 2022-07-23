@@ -19,5 +19,5 @@ export default {
   getProductById,
   queryAllProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };

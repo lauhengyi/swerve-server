@@ -19,7 +19,7 @@ if (!process.env.DATABASE_URL || !process.env.DATABASE_PASSWORD) {
 }
 const DB = process.env.DATABASE_URL.replace(
   '<password>',
-  process.env.DATABASE_PASSWORD
+  process.env.DATABASE_PASSWORD,
 );
 mongoose.connect(DB).then(() => console.log('DB connection successful!'));
 

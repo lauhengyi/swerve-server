@@ -43,7 +43,7 @@ const errorController = (
   res: Response,
   // Disabled cause the last variable is required for express to see this module as the error handler
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (err instanceof mongoose.Error.CastError) err = handleCastErrorDB(err);
   if (err instanceof mongoose.Error.ValidationError)
@@ -54,14 +54,14 @@ const errorController = (
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       status: err.status,
-      message: err.message
+      message: err.message,
     });
   } else {
     // console.error({ err });
     res.status(500).json({
       status: 'error',
       message: 'Something went wrong.',
-      err: err.message
+      err: err.message,
     });
   }
 };

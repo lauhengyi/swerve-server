@@ -20,19 +20,19 @@ const signUp = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    accountType: req.body.accountType
+    accountType: req.body.accountType,
   });
 
   const token = jwt.sign({ id: doc._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
   res.status(201).json({
     status: 'success',
     token,
     data: {
-      doc
-    }
+      doc,
+    },
   });
 });
 
@@ -57,12 +57,12 @@ const logIn = catchAsync(async (req, res, next) => {
   }
 
   const token = jwt.sign({ id: doc._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
   res.status(200).json({
     status: 'success',
-    token
+    token,
   });
 });
 

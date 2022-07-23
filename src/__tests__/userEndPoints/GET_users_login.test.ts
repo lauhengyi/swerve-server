@@ -12,12 +12,12 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dreadmill@gmail.com',
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
@@ -30,19 +30,19 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dreadmill@gmail.com',
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
       const expectedMessage = {
         status: 'success',
-        token: expect.any(String)
+        token: expect.any(String),
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -54,11 +54,11 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
@@ -71,18 +71,18 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Please provide an email and password.'
+        message: 'Please provide an email and password.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -94,11 +94,11 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
-        email: 'dreadmill@gmail.com'
+        email: 'dreadmill@gmail.com',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
@@ -111,18 +111,18 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
-        email: 'dreadmill@gmail.com'
+        email: 'dreadmill@gmail.com',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Please provide an email and password.'
+        message: 'Please provide an email and password.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -134,12 +134,12 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dremill@gmail.com',
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
@@ -153,19 +153,19 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dremill@gmail.com',
-        password: 'heng1230@sjfl.'
+        password: 'heng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Email or password is incorrect.'
+        message: 'Email or password is incorrect.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -178,12 +178,12 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dreadmill@gmail.com',
-        password: 'hng1230@sjfl.'
+        password: 'hng1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
@@ -197,19 +197,19 @@ describe('GET /users/login', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       await request(app).post('/api/v1/users/signup').send(user);
       const body = {
         email: 'dreadmill@gmail.com',
-        password: 'heg1230@sjfl.'
+        password: 'heg1230@sjfl.',
       };
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Email or password is incorrect.'
+        message: 'Email or password is incorrect.',
       };
       expect(response.body).toEqual(expectedMessage);
     });

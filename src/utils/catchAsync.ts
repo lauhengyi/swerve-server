@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 type middlewareFn = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 
 const catchAsync =

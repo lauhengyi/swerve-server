@@ -15,35 +15,35 @@ const productSchema = new mongoose.Schema<IProduct>({
   name: {
     type: String,
     required: [true, 'Product name is required.'],
-    trim: true
+    trim: true,
   },
   price: {
     type: Number,
-    required: [true, 'Product price is required.']
+    required: [true, 'Product price is required.'],
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   category: {
     type: String,
-    required: [true, 'Product category is required.']
+    required: [true, 'Product category is required.'],
   },
   subCategory: {
-    type: String
+    type: String,
   },
   coverImage: {
     type: String,
-    required: [true, 'Product cover image is required.']
+    required: [true, 'Product cover image is required.'],
   },
   images: {
-    type: [String]
+    type: [String],
   },
   dateUpdated: {
     type: Number,
     default: Date.now(),
-    required: [true, 'Product date updated is required.']
-  }
+    required: [true, 'Product date updated is required.'],
+  },
 });
 
 const Product = mongoose.model<IProduct>('Product', productSchema);

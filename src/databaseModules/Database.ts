@@ -31,7 +31,7 @@ export default class Database<X, Y, Z> {
   async update(id: string, payload: object) {
     return await this.model.findByIdAndUpdate(id, payload, {
       new: true,
-      runValidators: true
+      runValidators: true,
     });
   }
 

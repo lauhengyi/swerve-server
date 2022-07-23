@@ -31,8 +31,8 @@ describe('GET /products', () => {
         status: 'success',
         results: 0,
         data: {
-          doc: []
-        }
+          doc: [],
+        },
       };
 
       expect(response.body).toEqual(expectedMessage);
@@ -46,14 +46,14 @@ describe('GET /products', () => {
         price: 10,
         description: 'This is a test price',
         coverImage: './test',
-        category: 'Umbrella'
+        category: 'Umbrella',
       };
       const body2 = {
         name: 'Test name 2',
         price: 14,
         description: 'This is a test price 2',
         coverImage: './test2',
-        category: 'Brushes'
+        category: 'Brushes',
       };
       await request(app).post('/api/v1/products').send(body1);
       await request(app).post('/api/v1/products').send(body2);
@@ -71,14 +71,14 @@ describe('GET /products', () => {
         price: 10,
         description: 'This is a test price',
         coverImage: './test',
-        category: 'Umbrella'
+        category: 'Umbrella',
       };
       const body2 = {
         name: 'Test name 2',
         price: 14,
         description: 'This is a test price 2',
         coverImage: './test2',
-        category: 'Brushes'
+        category: 'Brushes',
       };
       await request(app).post('/api/v1/products').send(body1);
       await request(app).post('/api/v1/products').send(body2);
@@ -96,21 +96,21 @@ describe('GET /products', () => {
         price: 50,
         description: 'This is a test price',
         coverImage: './test',
-        category: 'Umbrella'
+        category: 'Umbrella',
       };
       const body2 = {
         name: 'Test name 2',
         price: 14,
         description: 'This is a test price 2',
         coverImage: './test2',
-        category: 'Brushes'
+        category: 'Brushes',
       };
       const body3 = {
         name: 'Test name 3',
         price: 102,
         description: 'This is a test price 3',
         coverImage: './test3',
-        category: 'Soap'
+        category: 'Soap',
       };
       const productToBeFound1 = await request(app)
         .post('/api/v1/products')
@@ -137,9 +137,9 @@ describe('GET /products', () => {
           doc: [
             productToBeFound2.body.data.doc,
             productToBeFound1.body.data.doc,
-            productToBeFound3.body.data.doc
-          ]
-        }
+            productToBeFound3.body.data.doc,
+          ],
+        },
       };
 
       expect(response.body).toEqual(expectedMessage);

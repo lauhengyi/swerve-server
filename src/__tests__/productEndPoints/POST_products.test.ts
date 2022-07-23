@@ -12,7 +12,7 @@ describe('POST /products', () => {
         price: 10,
         description: 'This is a test price',
         coverImage: './test',
-        category: 'Umbrella'
+        category: 'Umbrella',
       };
 
       const response = await request(app).post('/api/v1/products').send(body);
@@ -26,7 +26,7 @@ describe('POST /products', () => {
       price: 10,
       description: 'This is a test price',
       coverImage: './test',
-      category: 'Umbrella'
+      category: 'Umbrella',
     };
 
     const response = await request(app).post('/api/v1/products').send(body);
@@ -40,7 +40,7 @@ describe('POST /products', () => {
       price: 10,
       description: 'This is a test price',
       coverImage: './test',
-      category: 'Umbrella'
+      category: 'Umbrella',
     };
 
     const response = await request(app).post('/api/v1/products').send(body);
@@ -56,7 +56,7 @@ describe('POST /products', () => {
       coverImage: './test',
       images: [],
       category: 'Umbrella',
-      dateUpdated: expect.any(Number)
+      dateUpdated: expect.any(Number),
     };
     expect(response.body.data.doc).toEqual(expectedDoc);
   });
@@ -64,7 +64,7 @@ describe('POST /products', () => {
   describe('When requested product to be created is invalid', () => {
     it('Should have a status code 400', async () => {
       const body = {
-        test: 'error'
+        test: 'error',
       };
 
       const response = await request(app).post('/api/v1/products').send(body);
@@ -74,7 +74,7 @@ describe('POST /products', () => {
 
     it('Should return a content with a content-type of json', async () => {
       const body = {
-        test: 'error'
+        test: 'error',
       };
 
       const response = await request(app).post('/api/v1/products').send(body);
@@ -84,7 +84,7 @@ describe('POST /products', () => {
 
     it('Should respond with a status of "fail" and and a appropriate message', async () => {
       const body = {
-        test: 'error'
+        test: 'error',
       };
 
       const response = await request(app).post('/api/v1/products').send(body);
@@ -92,7 +92,7 @@ describe('POST /products', () => {
       const expectedMessage = {
         status: 'fail',
         message:
-          'Product cover image is required. Product category is required. Product price is required. Product name is required.'
+          'Product cover image is required. Product category is required. Product price is required. Product name is required.',
       };
       expect(response.body).toEqual(expectedMessage);
     });

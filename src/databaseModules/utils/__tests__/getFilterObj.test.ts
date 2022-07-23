@@ -9,13 +9,13 @@ describe('getFilterObj', () => {
         sort: 'asc',
         price: '100',
         limit: 6,
-        fields: 'name, price'
+        fields: 'name, price',
       };
       const queryObj = getFilterObj(queryParams);
 
       const expected = {
         name: 'test',
-        price: '100'
+        price: '100',
       };
 
       expect(queryObj).toEqual(expected);
@@ -29,7 +29,7 @@ describe('getFilterObj', () => {
         limit: 6,
         fields: 'name, price',
         rating: { gt: 2, lt: 5 },
-        gte: 5
+        gte: 5,
       };
 
       const queryObj = getFilterObj(queryParams);
@@ -38,7 +38,7 @@ describe('getFilterObj', () => {
         name: 'test',
         price: { $gte: 100, $lte: 300 },
         rating: { $gt: 2, $lt: 5 },
-        gte: 5
+        gte: 5,
       };
 
       expect(queryObj).toEqual(expected);

@@ -9,8 +9,8 @@ const createOneFactory = <T>(database: Database<T>) =>
     res.status(201).json({
       status: 'success',
       data: {
-        doc
-      }
+        doc,
+      },
     });
   });
 
@@ -25,8 +25,8 @@ const getOneFactory = <T>(database: Database<T>) =>
     res.status(200).json({
       status: 'success',
       data: {
-        doc
-      }
+        doc,
+      },
     });
   });
 
@@ -42,8 +42,8 @@ const queryAllFactory = <T>(database: Database<T>) =>
       status: 'success',
       results: doc.length,
       data: {
-        doc
-      }
+        doc,
+      },
     });
   });
 
@@ -58,8 +58,8 @@ const updateOneFactory = <T>(database: Database<T>) =>
     res.status(200).json({
       status: 'success',
       data: {
-        doc
-      }
+        doc,
+      },
     });
   });
 
@@ -73,7 +73,7 @@ const deleteOneFactory = <T>(database: Database<T>) =>
 
     res.status(204).json({
       status: 'success',
-      data: null
+      data: null,
     });
   });
 
@@ -82,5 +82,5 @@ export default {
   getOneFactory,
   queryAllFactory,
   updateOneFactory,
-  deleteOneFactory
+  deleteOneFactory,
 };

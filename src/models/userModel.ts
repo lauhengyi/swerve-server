@@ -26,17 +26,17 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
     required: [true, 'Username is required.'],
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
     required: [true, 'Email is required.'],
     unique: true,
-    validate: [isEmail, 'Invalid email.']
+    validate: [isEmail, 'Invalid email.'],
   },
   password: {
     type: String,
-    required: [true, 'Password is required.']
+    required: [true, 'Password is required.'],
   },
   passwordConfirm: {
     type: String,
@@ -46,41 +46,41 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
       validator: function (this: IUser, input: string) {
         return input === this.password;
       },
-      message: 'Passwords are not the same.'
-    }
+      message: 'Passwords are not the same.',
+    },
   },
   profileImage: {
     type: String,
-    default: './default-profile-image.png'
+    default: './default-profile-image.png',
   },
   followedShops: {
     type: [String],
-    default: []
+    default: [],
   },
   ownedShops: {
     type: [String],
-    default: []
+    default: [],
   },
   accountType: {
     type: String,
     required: true,
     enum: {
       values: ['regular', 'merchant'],
-      message: 'Account type must be either regular or merchant.'
-    }
+      message: 'Account type must be either regular or merchant.',
+    },
   },
   dateCreated: {
     type: Number,
-    default: Date.now()
+    default: Date.now(),
   },
   isPublic: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isAdmin: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {

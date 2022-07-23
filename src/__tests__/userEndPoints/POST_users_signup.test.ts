@@ -12,7 +12,7 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -27,7 +27,7 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -50,9 +50,9 @@ describe('POST users/signup', () => {
             ownedShops: [],
             dateCreated: expect.any(Number),
             isPublic: false,
-            isAdmin: false
-          }
-        }
+            isAdmin: false,
+          },
+        },
       };
 
       expect(response.body).toEqual(expectedDoc);
@@ -67,14 +67,14 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       const body2 = {
         username: 'dreadmill_gratis',
         email: 'mill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       await request(app).post('/api/v1/users/signup').send(body);
@@ -91,14 +91,14 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       const body2 = {
         username: 'dreadmill_gratis',
         email: 'mill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       await request(app).post('/api/v1/users/signup').send(body);
@@ -109,7 +109,7 @@ describe('POST users/signup', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'The username, "dreadmill_gratis", is already taken.'
+        message: 'The username, "dreadmill_gratis", is already taken.',
       };
 
       expect(response.body).toEqual(expectedMessage);
@@ -122,7 +122,7 @@ describe('POST users/signup', () => {
         email: 'dreadmillmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -138,7 +138,7 @@ describe('POST users/signup', () => {
         email: 'dreadmillmail@com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -147,7 +147,7 @@ describe('POST users/signup', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid email.'
+        message: 'Invalid email.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -159,14 +159,14 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       const body2 = {
         username: 'mill_gratis',
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       await request(app).post('/api/v1/users/signup').send(body);
@@ -184,14 +184,14 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
       const body2 = {
         username: 'mill_gratis',
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng1230@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       await request(app).post('/api/v1/users/signup').send(body);
@@ -202,7 +202,7 @@ describe('POST users/signup', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'The email, "dreadmill@gmail.com", is already taken.'
+        message: 'The email, "dreadmill@gmail.com", is already taken.',
       };
 
       expect(response.body).toEqual(expectedMessage);
@@ -215,7 +215,7 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng123@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -231,7 +231,7 @@ describe('POST users/signup', () => {
         email: 'dreadmill@gmail.com',
         password: 'heng1230@sjfl.',
         passwordConfirm: 'heng123@sjfl.',
-        accountType: 'regular'
+        accountType: 'regular',
       };
 
       const response = await request(app)
@@ -240,7 +240,7 @@ describe('POST users/signup', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Passwords are not the same.'
+        message: 'Passwords are not the same.',
       };
       expect(response.body).toEqual(expectedMessage);
     });

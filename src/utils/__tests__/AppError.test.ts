@@ -17,7 +17,7 @@ describe('AppError', () => {
         'Test Error 1',
         'asdjfklasldfja 2',
         'Help me 12345 3',
-        'Give me help'
+        'Give me help',
       ];
       const statusCodes = [500, 406, 404, 501];
 
@@ -38,7 +38,7 @@ describe('AppError', () => {
         'error',
         'fail',
         'error',
-        'fail'
+        'fail',
       ];
 
       for (let i = 0; i < statusCodes.length; i++) {
@@ -50,7 +50,7 @@ describe('AppError', () => {
     it('Should have an "isOperational" property that is set to true', () => {
       const errs = [
         new AppError('Test Error', 500),
-        new AppError('Test Error', 404)
+        new AppError('Test Error', 404),
       ];
 
       for (let i = 0; i < errs.length; i++) {

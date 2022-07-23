@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "prod": "NODE_ENV=production nodemon src/server.ts",
     "test": "jest --runInBand --testEnvironment=node --verbose",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext --fix .ts",
     "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
   "author": "Lau Heng Yi",

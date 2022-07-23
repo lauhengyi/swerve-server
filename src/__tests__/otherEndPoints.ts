@@ -8,7 +8,7 @@ describe('Unhandled Endpoints', () => {
         'api/v1/prcts/testID',
         'api/v1/products/testID/testID',
         'api/v1/askldhflaksjhfalsd',
-        'api/asddf'
+        'api/asddf',
       ];
 
       for (const endPoint of unHandledEndPoints) {
@@ -40,14 +40,14 @@ describe('Unhandled Endpoints', () => {
         'api/v1/prcts/testID',
         'api/v1/products/testID/testID',
         'api/v1/askldhflaksjhfalsd',
-        'api/asddf'
+        'api/asddf',
       ];
 
       const expectedMessages = [
         'Cannot find api/v1/prcts/testID on this server.',
         'Cannot find api/v1/products/testID/testID on this server.',
         'Cannot find api/v1/askldhflaksjhfalsd on this server.',
-        'Cannot find api/asddf on this server.'
+        'Cannot find api/asddf on this server.',
       ];
 
       for (let i = 0; i < unHandledEndPoints.length; i++) {
