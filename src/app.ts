@@ -17,7 +17,7 @@ app.use(`${apiString}/products`, productRoutes);
 
 // Catch all unhandled requests and return 404
 app.all('*', (req, res, next) => {
-  const message = `Connot find ${req.originalUrl} on this server.`;
+  const message = `Cannot find ${req.originalUrl} on this server.`;
   next(new AppError(message, 404));
 });
 

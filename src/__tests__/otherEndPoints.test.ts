@@ -5,10 +5,10 @@ describe('Unhandled Endpoints', () => {
   describe('When given a request to an endpoint that does not exist', () => {
     it('Should have a status code 404', async () => {
       const unHandledEndPoints = [
-        'api/v1/prcts/testID',
-        'api/v1/products/testID/testID',
-        'api/v1/askldhflaksjhfalsd',
-        'api/asddf',
+        '/api/v1/prcts/testID',
+        '/api/v1/products/testID/testID',
+        '/api/v1/askldhflaksjhfalsd',
+        '/api/asddf',
       ];
 
       for (const endPoint of unHandledEndPoints) {
@@ -37,17 +37,17 @@ describe('Unhandled Endpoints', () => {
     });
     it('Should have a "fail" status and an appropriate message', async () => {
       const unHandledEndPoints = [
-        'api/v1/prcts/testID',
-        'api/v1/products/testID/testID',
-        'api/v1/askldhflaksjhfalsd',
-        'api/asddf',
+        '/api/v1/prcts/testID',
+        '/api/v1/products/testID/testID',
+        '/api/v1/askldhflaksjhfalsd',
+        '/api/asddf',
       ];
 
       const expectedMessages = [
-        'Cannot find api/v1/prcts/testID on this server.',
-        'Cannot find api/v1/products/testID/testID on this server.',
-        'Cannot find api/v1/askldhflaksjhfalsd on this server.',
-        'Cannot find api/asddf on this server.',
+        'Cannot find /api/v1/prcts/testID on this server.',
+        'Cannot find /api/v1/products/testID/testID on this server.',
+        'Cannot find /api/v1/askldhflaksjhfalsd on this server.',
+        'Cannot find /api/asddf on this server.',
       ];
 
       for (let i = 0; i < unHandledEndPoints.length; i++) {
