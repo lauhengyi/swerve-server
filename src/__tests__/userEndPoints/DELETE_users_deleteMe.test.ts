@@ -77,7 +77,7 @@ describe('DELETE /users/deleteMe', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid token',
+        message: 'Invalid token.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -97,7 +97,7 @@ describe('DELETE /users/deleteMe', () => {
       expect(response.status).toBe(401);
     });
 
-    it('Should respond with a status of "fail" and a message of "Token has expired"', async () => {
+    it('Should respond with a status of "fail" and a message of "Token has expired."', async () => {
       // Shorten the token's expiry time
       process.env.JWT_EXPIRES_IN = '1';
 
@@ -109,7 +109,7 @@ describe('DELETE /users/deleteMe', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Token has expired',
+        message: 'Token has expired.',
       };
 
       expect(response.body).toEqual(expectedMessage);
@@ -117,11 +117,35 @@ describe('DELETE /users/deleteMe', () => {
   });
 
   describe('When the token is for a deleted user', () => {
-    it.todo('Should have a status code of 401');
+    it('Should have a status code of 401', async () => {
+      const token = await signUpAndGetToken();
+      await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
 
-    it.todo(
-      'Should respond with a status of "fail" and a message of "User has been deleted"',
-    );
+      const response = await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(401);
+    });
+
+    it('Should respond with a status of "fail" and a message of "The user that this token belongs to no longer exists."', async () => {
+      const token = await signUpAndGetToken();
+      await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
+
+      const response = await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'The user that this token belongs to no longer exists.',
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
   });
 
   describe('When the token is for a old user that now has a different password', () => {

@@ -31,9 +31,9 @@ const handleDuplicateFieldsErrorDB = (err: MongoServerError) => {
   return new AppError(message, 400);
 };
 
-const handleTokenExpiredError = () => new AppError('Token has expired', 401);
+const handleTokenExpiredError = () => new AppError('Token has expired.', 401);
 
-const handleJWTError = () => new AppError('Invalid token', 401);
+const handleJWTError = () => new AppError('Invalid token.', 401);
 
 type clientError =
   | Error

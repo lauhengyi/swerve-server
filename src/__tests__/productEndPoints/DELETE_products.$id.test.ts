@@ -145,7 +145,7 @@ describe('DELETE /products/:id', () => {
       expect(response.status).toBe(401);
     });
 
-    it('Should respond with a status of "fail" and a message of "Invalid token"', async () => {
+    it('Should respond with a status of "fail" and a message of "Invalid token."', async () => {
       const token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
       const response = await request(app)
@@ -154,7 +154,7 @@ describe('DELETE /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Invalid token',
+        message: 'Invalid token.',
       };
       expect(response.body).toEqual(expectedMessage);
     });
@@ -164,7 +164,7 @@ describe('DELETE /products/:id', () => {
     it.todo('Should have a status code of 403');
 
     it.todo(
-      'Should respond with a status of "fail" and a message of "You do not have permission to perform this operation"',
+      'Should respond with a status of "fail" and a message of "You do not have permission to perform this operation."',
     );
   });
 
@@ -182,7 +182,7 @@ describe('DELETE /products/:id', () => {
       expect(response.status).toBe(401);
     });
 
-    it('Should respond with a status of "fail" and a message of "Token has expired"', async () => {
+    it('Should respond with a status of "fail" and a message of "Token has expired."', async () => {
       // Shorten the token's expiry time
       process.env.JWT_EXPIRES_IN = '1';
 
@@ -194,7 +194,7 @@ describe('DELETE /products/:id', () => {
 
       const expectedMessage = {
         status: 'fail',
-        message: 'Token has expired',
+        message: 'Token has expired.',
       };
 
       expect(response.body).toEqual(expectedMessage);
@@ -202,18 +202,42 @@ describe('DELETE /products/:id', () => {
   });
 
   describe('When the token is for a deleted user', () => {
-    it.todo('Should have a status code of 401');
+    it('Should have a status code of 401', async () => {
+      const token = await signUpAndGetToken();
+      await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
 
-    it.todo(
-      'Should respond with a status of "fail" and a message of "User has been deleted"',
-    );
+      const response = await request(app)
+        .delete('/api/v1/products/507f1f77bcf86cd799439011')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(401);
+    });
+
+    it('Should respond with a status of "fail" and a message of "The user that this token belongs to no longer exists."', async () => {
+      const token = await signUpAndGetToken();
+      await request(app)
+        .delete('/api/v1/users/deleteMe')
+        .set('Authorization', `Bearer ${token}`);
+
+      const response = await request(app)
+        .delete('/api/v1/products/507f1f77bcf86cd799439011')
+        .set('Authorization', `Bearer ${token}`);
+
+      const expectedMessage = {
+        status: 'fail',
+        message: 'The user that this token belongs to no longer exists.',
+      };
+      expect(response.body).toEqual(expectedMessage);
+    });
   });
 
   describe('When the token is for a old user that now has a different password', () => {
     it.todo('Should have a status code of 401');
 
     it.todo(
-      'Should respond with a status of "fail" and a message of "Password has changed, please log in again"',
+      'Should respond with a status of "fail" and a message of "Password has changed, please log in again."',
     );
   });
 });
