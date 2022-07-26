@@ -66,4 +66,32 @@ const logIn = catchAsync(async (req, res, next) => {
   });
 });
 
-export default { signUp, logIn };
+const protect = catchAsync(async (req, res, next) => {
+  // Check for the JWT details in environment variables
+  if (!process.env.JWT_SECRET) {
+    return next(new AppError('JWT_SECRET is not defined', 500));
+  }
+
+  // Check whether token exists and is formatted properly
+  if (
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith('Bearer')
+  ) {
+    return next(
+      new AppError(
+        'You are not logged in. Please log in perform this operation.',
+        401,
+      ),
+    );
+  }
+
+  // Check whether token is valid and not expired
+  const token = req.headers.authorization.split(' ')[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  // Check for whether the user exists in the database
+
+  next();
+});
+
+export default { signUp, logIn, protect };

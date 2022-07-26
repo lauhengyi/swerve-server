@@ -1,5 +1,6 @@
 import express from 'express';
 import productController from '../controllers/productController';
+import authController from '../controllers/authController';
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -13,6 +14,6 @@ router
   .route('/:id')
   .get(productController.getProductById)
   .patch(productController.updateProduct)
-  .delete(productController.deleteProduct);
+  .delete(authController.protect, productController.deleteProduct);
 
 export default router;

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import AppError from '../utils/AppError';
 import MongoServerError from '../databaseModules/MongoServerError';
+import jwt from 'jsonwebtoken';
 
 const handleCastErrorDB = (err: mongoose.Error.CastError) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -18,7 +19,7 @@ const handleValidationErrorDB = (err: mongoose.Error.ValidationError) => {
   return new AppError(message, 400);
 };
 
-const handleDuplicateFieldsDB = (err: MongoServerError) => {
+const handleDuplicateFieldsErrorDB = (err: MongoServerError) => {
   const value = err.message.match(/(["'])(?:(?=(\\?))\2.)*?\1/);
   const name_1 = err.message.match(/\w*_1\b/);
 
@@ -29,6 +30,10 @@ const handleDuplicateFieldsDB = (err: MongoServerError) => {
   const message = `The ${name}, ${value[0]}, is already taken.`;
   return new AppError(message, 400);
 };
+
+const handleTokenExpiredError = () => new AppError('Token has expired', 401);
+
+const handleJWTError = () => new AppError('Invalid token', 401);
 
 type clientError =
   | Error
@@ -49,7 +54,9 @@ const errorController = (
   if (err instanceof mongoose.Error.ValidationError)
     err = handleValidationErrorDB(err);
   if (err.name === 'MongoServerError' && 'code' in err && err.code === 11000)
-    err = handleDuplicateFieldsDB(err);
+    err = handleDuplicateFieldsErrorDB(err);
+  if (err instanceof jwt.TokenExpiredError) err = handleTokenExpiredError();
+  if (err instanceof jwt.JsonWebTokenError) err = handleJWTError();
 
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
