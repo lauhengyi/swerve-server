@@ -187,7 +187,6 @@ describe('DELETE /products/:id', () => {
       process.env.JWT_EXPIRES_IN = '1';
 
       const token = await signUpAndGetToken();
-      console.log({ token });
 
       const response = await request(app)
         .delete('/api/v1/products/507f1f77bcf86cd799439011')
