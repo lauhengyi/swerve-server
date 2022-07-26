@@ -1,5 +1,6 @@
 import express from 'express';
 import authController from '../controllers/authController';
+import userController from '../controllers/userController';
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -7,6 +8,10 @@ const router = express.Router();
 router.route('/signup').post(authController.signUp);
 
 router.route('/login').get(authController.logIn);
+
+router
+  .route('/deleteMe')
+  .delete(authController.protect, userController.deleteMe);
 
 // router
 //   .route('/')

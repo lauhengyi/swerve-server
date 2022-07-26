@@ -90,7 +90,20 @@ const protect = catchAsync(async (req, res, next) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   // Check for whether the user exists in the database
+  if (typeof decoded === 'string') {
+    return next(new AppError('Payload does not exist in jwt token', 401));
+  }
+  const user = await userDatabase.findOne({ _id: decoded.id });
+  if (!user) {
+    return next(
+      new AppError('The user that this token belongs to no longer exists', 401),
+    );
+  }
 
+  // Check whether password has been changed since the token was issued
+
+  // Token authorized
+  req.user = user;
   next();
 });
 

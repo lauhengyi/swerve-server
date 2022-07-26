@@ -2,7 +2,7 @@ import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 import Database from '../databaseModules/Database';
 
-const createOneFactory = <T>(database: Database<T>) =>
+const createOneFactory = <X, Y, Z>(database: Database<X, Y, Z>) =>
   catchAsync(async (req, res) => {
     const doc = await database.create(req.body);
 
@@ -14,7 +14,7 @@ const createOneFactory = <T>(database: Database<T>) =>
     });
   });
 
-const getOneFactory = <T>(database: Database<T>) =>
+const getOneFactory = <X, Y, Z>(database: Database<X, Y, Z>) =>
   catchAsync(async (req, res, next) => {
     const doc = await database.findById(req.params.id);
 
@@ -30,7 +30,7 @@ const getOneFactory = <T>(database: Database<T>) =>
     });
   });
 
-const queryAllFactory = <T>(database: Database<T>) =>
+const queryAllFactory = <X, Y, Z>(database: Database<X, Y, Z>) =>
   catchAsync(async (req, res, next) => {
     const doc = await database.query(req.query);
 
@@ -47,7 +47,7 @@ const queryAllFactory = <T>(database: Database<T>) =>
     });
   });
 
-const updateOneFactory = <T>(database: Database<T>) =>
+const updateOneFactory = <X, Y, Z>(database: Database<X, Y, Z>) =>
   catchAsync(async (req, res, next) => {
     const doc = await database.update(req.params.id, req.body);
 
@@ -63,7 +63,7 @@ const updateOneFactory = <T>(database: Database<T>) =>
     });
   });
 
-const deleteOneFactory = <T>(database: Database<T>) =>
+const deleteOneFactory = <X, Y, Z>(database: Database<X, Y, Z>) =>
   catchAsync(async (req, res, next) => {
     const doc = await database.delete(req.params.id);
 

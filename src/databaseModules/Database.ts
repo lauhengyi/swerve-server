@@ -1,5 +1,5 @@
 import QueryFeatures from './utils/queryFeatures';
-import { Model, QueryOptions } from 'mongoose';
+import { Model, QueryOptions, Types } from 'mongoose';
 
 export default class Database<X, Y, Z> {
   model: Model<X, Y, Z>;
@@ -11,7 +11,7 @@ export default class Database<X, Y, Z> {
     return await this.model.create(payload);
   }
 
-  async findById(id: string) {
+  async findById(id: Types.ObjectId | string) {
     return await this.model.findById(id);
   }
 
@@ -28,14 +28,14 @@ export default class Database<X, Y, Z> {
     return await queryObj.query;
   }
 
-  async update(id: string, payload: object) {
+  async update(id: Types.ObjectId | string, payload: object) {
     return await this.model.findByIdAndUpdate(id, payload, {
       new: true,
       runValidators: true,
     });
   }
 
-  async delete(id: string) {
+  async delete(id: Types.ObjectId | string) {
     return await this.model.findByIdAndDelete(id);
   }
 }
