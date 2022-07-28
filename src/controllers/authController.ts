@@ -61,6 +61,34 @@ const logIn = catchAsync(async (req, res, next) => {
   sendTokenRes(doc, 200, res);
 });
 
+const updateMyPassword = catchAsync(async (req, res, next) => {
+  // Make sure route is protected and user is logged in
+  if (!req.user) {
+    return next(
+      new AppError('This route is not protected, but should be', 500),
+    );
+  }
+
+  // Check current password
+  if (!req.body.currentPassword)
+    return next(new AppError('Please provide your current password.', 400));
+  const user = await userDatabase.findById(req.user._id);
+  if (!user || !(await user.comparePassword(req.body.currentPassword))) {
+    return next(new AppError('Current password is incorrect.', 401));
+  }
+
+  // Update password
+  if (!req.body.password)
+    return next(new AppError('Please provide a new password.', 400));
+  if (!req.body.passwordConfirm)
+    return next(new AppError('Please confirm your new password.', 400));
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+
+  sendTokenRes(user, 200, res);
+});
+
 const protect = catchAsync(async (req, res, next) => {
   // Check for the JWT details in environment variables
   if (!process.env.JWT_SECRET) {
@@ -105,4 +133,4 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-export default { signUp, logIn, protect };
+export default { signUp, logIn, updateMyPassword, protect };

@@ -9,9 +9,6 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleResolution": "Node",
-    "paths": {
-      "*": ["src/custom.d.ts"]
-    }
+    "moduleResolution": "Node"
   }
 }

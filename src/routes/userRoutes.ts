@@ -6,8 +6,11 @@ import userController from '../controllers/userController';
 const router = express.Router();
 
 router.route('/signup').post(authController.signUp);
-
 router.route('/login').get(authController.logIn);
+
+router
+  .route('/updateMyPassword')
+  .patch(authController.protect, authController.updateMyPassword);
 
 router
   .route('/deleteMe')
