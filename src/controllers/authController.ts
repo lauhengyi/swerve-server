@@ -3,18 +3,38 @@ import catchAsync from '../utils/catchAsync';
 import Database from '../databaseModules/Database';
 import jwt from 'jsonwebtoken';
 import AppError from '../utils/AppError';
+import { Response } from 'express';
+import { UserDocument } from '../models/userModel';
 
 const userDatabase = new Database(User);
 
-const signUp = catchAsync(async (req, res, next) => {
+const sendTokenRes = (
+  user: UserDocument,
+  statusCode: number,
+  res: Response,
+) => {
   // Check for the JWT details in environment variables
   if (!process.env.JWT_SECRET) {
-    return next(new AppError('JWT_SECRET is not defined.', 500));
+    throw new AppError('JWT_SECRET is not defined.', 500);
   }
   if (!process.env.JWT_EXPIRES_IN) {
-    return next(new AppError('JWT_EXPIRES_IN is not defined.', 500));
+    throw new AppError('JWT_EXPIRES_IN is not defined.', 500);
   }
 
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user,
+    },
+  });
+};
+
+const signUp = catchAsync(async (req, res) => {
   const doc = await userDatabase.create({
     username: req.body.username,
     email: req.body.email,
@@ -23,28 +43,10 @@ const signUp = catchAsync(async (req, res, next) => {
     accountType: req.body.accountType,
   });
 
-  const token = jwt.sign({ id: doc._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-
-  res.status(201).json({
-    status: 'success',
-    token,
-    data: {
-      doc,
-    },
-  });
+  sendTokenRes(doc, 201, res);
 });
 
 const logIn = catchAsync(async (req, res, next) => {
-  // Check for the JWT details in environment variables
-  if (!process.env.JWT_SECRET) {
-    return next(new AppError('JWT_SECRET is not defined.', 500));
-  }
-  if (!process.env.JWT_EXPIRES_IN) {
-    return next(new AppError('JWT_EXPIRES_IN is not defined.', 500));
-  }
-
   // Check the request for email and password
   if (!req.body.email || !req.body.password) {
     return next(new AppError('Please provide an email and password.', 400));
@@ -56,14 +58,7 @@ const logIn = catchAsync(async (req, res, next) => {
     return next(new AppError('Email or password is incorrect.', 401));
   }
 
-  const token = jwt.sign({ id: doc._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  sendTokenRes(doc, 200, res);
 });
 
 const protect = catchAsync(async (req, res, next) => {

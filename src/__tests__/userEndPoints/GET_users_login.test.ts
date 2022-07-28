@@ -24,7 +24,7 @@ describe('GET /users/login', () => {
 
       expect(response.statusCode).toBe(200);
     });
-    it('Should respond with status of success, and the jwt token of the logged in user', async () => {
+    it('Should respond with status of success, the jwt token of the logged in user, and the user data', async () => {
       const user = {
         username: 'dreadmill_gratis',
         email: 'dreadmill@gmail.com',
@@ -40,11 +40,27 @@ describe('GET /users/login', () => {
 
       const response = await request(app).get('/api/v1/users/login').send(body);
 
-      const expectedMessage = {
+      const expectedResponse = {
         status: 'success',
         token: expect.any(String),
+        data: {
+          user: {
+            _id: expect.any(String),
+            __v: expect.any(Number),
+            username: 'dreadmill_gratis',
+            email: 'dreadmill@gmail.com',
+            password: expect.any(String),
+            profileImage: './default-profile-image.png',
+            followedShops: [],
+            accountType: 'regular',
+            ownedShops: [],
+            dateCreated: expect.any(Number),
+            isPublic: false,
+            isAdmin: false,
+          },
+        },
       };
-      expect(response.body).toEqual(expectedMessage);
+      expect(response.body).toEqual(expectedResponse);
     });
   });
   describe('When the email is not provided', () => {

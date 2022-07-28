@@ -34,16 +34,16 @@ describe('POST users/signup', () => {
         .post('/api/v1/users/signup')
         .send(body);
 
-      const expectedDoc = {
+      const expectedResponse = {
         status: 'success',
         token: expect.any(String),
         data: {
-          doc: {
+          user: {
             _id: expect.any(String),
             __v: expect.any(Number),
             username: 'dreadmill_gratis',
             email: 'dreadmill@gmail.com',
-            password: expect.any(String),
+            password: expect.not.stringMatching(body.password),
             profileImage: './default-profile-image.png',
             followedShops: [],
             accountType: 'regular',
@@ -55,8 +55,7 @@ describe('POST users/signup', () => {
         },
       };
 
-      expect(response.body).toEqual(expectedDoc);
-      expect(response.body.data.doc.password).not.toBe(body.password);
+      expect(response.body).toEqual(expectedResponse);
     });
   });
 
