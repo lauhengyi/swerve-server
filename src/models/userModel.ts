@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 import bcrypt from 'bcryptjs';
 
@@ -21,6 +21,11 @@ interface IUserMethods {
 }
 
 type UserModel = mongoose.Model<IUser, object, IUserMethods>;
+
+type UserDocument = Document<unknown, object, IUser> &
+  IUser & {
+    _id: Types.ObjectId;
+  } & IUserMethods;
 
 const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   username: {
@@ -100,5 +105,5 @@ userSchema.methods.comparePassword = async function (givenPassword: string) {
 
 const User = mongoose.model<IUser, UserModel>('User', userSchema);
 
-export { IUser, IUserMethods };
+export { UserDocument };
 export default User;
