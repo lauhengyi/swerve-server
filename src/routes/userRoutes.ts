@@ -9,8 +9,8 @@ router.route('/signup').post(authController.signUp);
 router.route('/login').get(authController.logIn);
 
 router
-  .route('/updateMyPassword')
-  .patch(authController.protect, authController.updateMyPassword);
+  .route('/changeMyPassword')
+  .patch(authController.protect, authController.changePassword);
 
 router
   .route('/deleteMe')

@@ -16,7 +16,7 @@ const signUpAndGetToken = async () => {
   return response.body.token;
 };
 
-describe('PATCH /api/v1/users/updateMyPassword', () => {
+describe('PATCH /api/v1/users/changeMyPassword', () => {
   describe('When successfully authorized', () => {
     describe('When given a valid current password and valid new password and password Confirm', () => {
       it('Should have a status code of 200', async () => {
@@ -28,7 +28,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -44,7 +44,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -81,7 +81,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -96,7 +96,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -117,7 +117,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -132,7 +132,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -153,7 +153,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -168,7 +168,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -190,7 +190,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -206,7 +206,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -228,7 +228,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -244,7 +244,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         };
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .send(body)
           .set('Authorization', `Bearer ${token}`);
 
@@ -258,7 +258,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
     describe('When not given a jwt token', () => {
       it('Should have a status code of 401', async () => {
         const response = await request(app).patch(
-          '/api/v1/users/updateMyPassword',
+          '/api/v1/users/changeMyPassword',
         );
 
         expect(response.status).toBe(401);
@@ -266,7 +266,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
 
       it('Should respond with a status of "fail" and a message of "You are not logged in. Please log in perform this operation."', async () => {
         const response = await request(app).patch(
-          '/api/v1/users/updateMyPassword',
+          '/api/v1/users/changeMyPassword',
         );
 
         const expectedMessage = {
@@ -283,7 +283,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         const token =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         expect(response.status).toBe(401);
@@ -293,7 +293,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         const token =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         const expectedMessage = {
@@ -312,7 +312,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         const token = await signUpAndGetToken();
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         expect(response.status).toBe(401);
@@ -325,7 +325,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
         const token = await signUpAndGetToken();
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         const expectedMessage = {
@@ -345,7 +345,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
           .set('Authorization', `Bearer ${token}`);
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         expect(response.status).toBe(401);
@@ -358,7 +358,7 @@ describe('PATCH /api/v1/users/updateMyPassword', () => {
           .set('Authorization', `Bearer ${token}`);
 
         const response = await request(app)
-          .patch('/api/v1/users/updateMyPassword')
+          .patch('/api/v1/users/changeMyPassword')
           .set('Authorization', `Bearer ${token}`);
 
         const expectedMessage = {

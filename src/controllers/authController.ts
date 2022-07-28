@@ -61,7 +61,7 @@ const logIn = catchAsync(async (req, res, next) => {
   sendTokenRes(doc, 200, res);
 });
 
-const updateMyPassword = catchAsync(async (req, res, next) => {
+const changePassword = catchAsync(async (req, res, next) => {
   // Make sure route is protected and user is logged in
   if (!req.user) {
     return next(
@@ -133,4 +133,4 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-export default { signUp, logIn, updateMyPassword, protect };
+export default { signUp, logIn, changePassword, protect };
