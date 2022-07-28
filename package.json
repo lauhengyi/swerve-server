@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "prod": "NODE_ENV=production nodemon src/server.ts",
-    "test": "jest --runInBand --testEnvironment=node --verbose",
+    "test": "jest --testEnvironment=node --verbose",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
