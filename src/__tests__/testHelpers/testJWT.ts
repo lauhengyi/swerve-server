@@ -1,8 +1,5 @@
 import app from '../../app';
 import request from 'supertest';
-import testDBSetup from '../../testUtils/testDBSetup';
-
-testDBSetup();
 
 const signUpAndGetToken = async () => {
   const user = {
@@ -16,38 +13,16 @@ const signUpAndGetToken = async () => {
   return response.body.token;
 };
 
-describe('DELETE /users/deleteMe', () => {
-  describe('When successfully authorized', () => {
-    it('Should have a status code 204', async () => {
-      const token = await signUpAndGetToken();
-
-      const response = await request(app)
-        .delete(`/api/v1/users/deleteMe`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(204);
-    });
-
-    it('Should return no content', async () => {
-      const token = await signUpAndGetToken();
-
-      const response = await request(app)
-        .delete(`/api/v1/users/deleteMe`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.body).toEqual({});
-    });
-  });
-
+const testJWT = (supertestCall: request.Test) => {
   describe('When not given a jwt token', () => {
     it('Should have a status code of 401', async () => {
-      const response = await request(app).delete('/api/v1/users/deleteMe');
+      const response = await supertestCall;
 
       expect(response.status).toBe(401);
     });
 
     it('Should respond with a status of "fail" and a message of "You are not logged in. Please log in perform this operation."', async () => {
-      const response = await request(app).delete('/api/v1/users/deleteMe');
+      const response = await supertestCall;
 
       const expectedMessage = {
         status: 'fail',
@@ -61,19 +36,21 @@ describe('DELETE /users/deleteMe', () => {
     it('Should have a status code of 401', async () => {
       const token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       expect(response.status).toBe(401);
     });
 
-    it('Should respond with a status of "fail" and a message of "Invalid token"', async () => {
+    it('Should respond with a status of "fail" and a message of "Invalid token."', async () => {
       const token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       const expectedMessage = {
         status: 'fail',
@@ -90,9 +67,10 @@ describe('DELETE /users/deleteMe', () => {
 
       const token = await signUpAndGetToken();
 
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       expect(response.status).toBe(401);
     });
@@ -103,9 +81,10 @@ describe('DELETE /users/deleteMe', () => {
 
       const token = await signUpAndGetToken();
 
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       const expectedMessage = {
         status: 'fail',
@@ -123,9 +102,10 @@ describe('DELETE /users/deleteMe', () => {
         .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       expect(response.status).toBe(401);
     });
@@ -136,9 +116,10 @@ describe('DELETE /users/deleteMe', () => {
         .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await request(app)
-        .delete('/api/v1/users/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       const expectedMessage = {
         status: 'fail',
@@ -160,9 +141,10 @@ describe('DELETE /users/deleteMe', () => {
         })
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await request(app)
-        .delete('/api/v1/user/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       expect(response.status).toBe(401);
     });
@@ -178,9 +160,10 @@ describe('DELETE /users/deleteMe', () => {
         })
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await request(app)
-        .delete('/api/v1/user/deleteMe')
-        .set('Authorization', `Bearer ${token}`);
+      const response = await supertestCall.set(
+        'Authorization',
+        `Bearer ${token}`,
+      );
 
       const expectedMessage = {
         status: 'fail',
@@ -189,4 +172,6 @@ describe('DELETE /users/deleteMe', () => {
       expect(response.body).toEqual(expectedMessage);
     });
   });
-});
+};
+
+export default testJWT;
