@@ -113,9 +113,9 @@ const protect = catchAsync(async (req, res, next) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   // Check for whether the user exists in the database
-  if (typeof decoded === 'string') {
-    return next(new AppError('Payload does not exist in jwt token.', 401));
-  }
+  if (typeof decoded === 'string')
+    return next(new AppError('Payload does not exist in JWT token.', 401));
+
   const user = await userDatabase.findOne({ _id: decoded.id });
   if (!user) {
     return next(
@@ -127,6 +127,19 @@ const protect = catchAsync(async (req, res, next) => {
   }
 
   // Check whether password has been changed since the token was issued
+  if (!decoded.iat)
+    return next(
+      new AppError(
+        'JWT token does not have a "issued at" property in payload',
+        401,
+      ),
+    );
+
+  if (user.passwordChangedAfter(decoded.iat)) {
+    return next(
+      new AppError('Password has changed, please log in again.', 401),
+    );
+  }
 
   // Token authorized
   req.user = user;

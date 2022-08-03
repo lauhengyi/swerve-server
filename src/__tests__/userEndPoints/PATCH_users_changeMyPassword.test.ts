@@ -65,6 +65,7 @@ describe('PATCH /api/v1/users/changeMyPassword', () => {
               dateCreated: expect.any(Number),
               isPublic: false,
               isAdmin: false,
+              passwordChangedAt: expect.any(Number),
             },
           },
         };
@@ -370,11 +371,45 @@ describe('PATCH /api/v1/users/changeMyPassword', () => {
     });
 
     describe('When the token is for a old user that now has a different password', () => {
-      it.todo('Should have a status code of 401');
+      it('Should have a status code of 401', async () => {
+        const token = await signUpAndGetToken();
+        await request(app)
+          .patch('/api/v1/users/changeMyPassword')
+          .send({
+            currentPassword: 'heng1230@sjfl.',
+            password: 'newPassword',
+            passwordConfirm: 'newPassword',
+          })
+          .set('Authorization', `Bearer ${token}`);
 
-      it.todo(
-        'Should respond with a status of "fail" and a message of "Password has changed, please log in again"',
-      );
+        const response = await request(app)
+          .patch('/api/v1/users/changeMyPassword')
+          .set('Authorization', `Bearer ${token}`);
+
+        expect(response.status).toBe(401);
+      });
+
+      it('Should respond with a status of "fail" and a message of "Password has changed, please log in again."', async () => {
+        const token = await signUpAndGetToken();
+        await request(app)
+          .patch('/api/v1/users/changeMyPassword')
+          .send({
+            currentPassword: 'heng1230@sjfl.',
+            password: 'newPassword',
+            passwordConfirm: 'newPassword',
+          })
+          .set('Authorization', `Bearer ${token}`);
+
+        const response = await request(app)
+          .patch('/api/v1/users/changeMyPassword')
+          .set('Authorization', `Bearer ${token}`);
+
+        const expectedMessage = {
+          status: 'fail',
+          message: 'Password has changed, please log in again.',
+        };
+        expect(response.body).toEqual(expectedMessage);
+      });
     });
   });
 });

@@ -152,7 +152,7 @@ describe('DELETE /users/deleteMe', () => {
     it('Should have a status code of 401', async () => {
       const token = await signUpAndGetToken();
       await request(app)
-        .patch('/api/v1/users/changePassword')
+        .patch('/api/v1/users/changeMyPassword')
         .send({
           currentPassword: 'heng1230@sjfl.',
           password: 'newPassword',
@@ -161,7 +161,7 @@ describe('DELETE /users/deleteMe', () => {
         .set('Authorization', `Bearer ${token}`);
 
       const response = await request(app)
-        .delete('/api/v1/user/deleteMe')
+        .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(401);
@@ -170,7 +170,7 @@ describe('DELETE /users/deleteMe', () => {
     it('Should respond with a status of "fail" and a message of "Password has changed, please log in again."', async () => {
       const token = await signUpAndGetToken();
       await request(app)
-        .patch('/api/v1/users/changePassword')
+        .patch('/api/v1/users/changeMyPassword')
         .send({
           currentPassword: 'heng1230@sjfl.',
           password: 'newPassword',
@@ -179,7 +179,7 @@ describe('DELETE /users/deleteMe', () => {
         .set('Authorization', `Bearer ${token}`);
 
       const response = await request(app)
-        .delete('/api/v1/user/deleteMe')
+        .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
       const expectedMessage = {

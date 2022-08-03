@@ -14,10 +14,12 @@ interface IUser {
   dateCreated: number;
   isPublic: boolean;
   isAdmin: boolean;
+  passwordChangedAt?: number;
 }
 
 interface IUserMethods {
   comparePassword: (givenPassword: string) => Promise<boolean>;
+  passwordChangedAfter: (jwtTimestamp: number) => boolean;
 }
 
 type UserModel = mongoose.Model<IUser, object, IUserMethods>;
@@ -86,8 +88,10 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
     type: Boolean,
     default: false,
   },
+  passwordChangedAt: Number,
 });
 
+// For hashing and salting passwords
 userSchema.pre('save', async function (next) {
   // Only hash password if it has been modified
   if (!this.isModified('password')) return next();
@@ -97,10 +101,28 @@ userSchema.pre('save', async function (next) {
 
   // Remove passwordConfirm field
   this.passwordConfirm = undefined;
+  next();
+});
+
+// For adding passwordChangedAt field
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now();
+  next();
 });
 
 userSchema.methods.comparePassword = async function (givenPassword: string) {
   return await bcrypt.compare(givenPassword, this.password);
+};
+
+userSchema.methods.passwordChangedAfter = function (jwtTimestamp: number) {
+  if (this.passwordChangedAt) {
+    const changedTimeStamp = Math.ceil(this.passwordChangedAt / 1000);
+    return jwtTimestamp < changedTimeStamp;
+  }
+
+  return false;
 };
 
 const User = mongoose.model<IUser, UserModel>('User', userSchema);
