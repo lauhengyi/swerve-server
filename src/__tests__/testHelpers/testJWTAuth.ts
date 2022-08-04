@@ -13,16 +13,18 @@ const signUpAndGetToken = async () => {
   return response.body.token;
 };
 
-const testJWT = (supertestCall: request.Test) => {
+type method = 'get' | 'post' | 'put' | 'delete' | 'patch';
+
+const testJWTAuth = (method: method, url: string) => {
   describe('When not given a jwt token', () => {
     it('Should have a status code of 401', async () => {
-      const response = await supertestCall;
+      const response = await request(app)[method](url);
 
       expect(response.status).toBe(401);
     });
 
     it('Should respond with a status of "fail" and a message of "You are not logged in. Please log in perform this operation."', async () => {
-      const response = await supertestCall;
+      const response = await request(app)[method](url);
 
       const expectedMessage = {
         status: 'fail',
@@ -36,21 +38,19 @@ const testJWT = (supertestCall: request.Test) => {
     it('Should have a status code of 401', async () => {
       const token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(401);
     });
 
-    it('Should respond with a status of "fail" and a message of "Invalid token."', async () => {
+    it('Should respond with a status of "fail" and a message of "Invalid token"', async () => {
       const token =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       const expectedMessage = {
         status: 'fail',
@@ -67,10 +67,9 @@ const testJWT = (supertestCall: request.Test) => {
 
       const token = await signUpAndGetToken();
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(401);
     });
@@ -81,10 +80,9 @@ const testJWT = (supertestCall: request.Test) => {
 
       const token = await signUpAndGetToken();
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       const expectedMessage = {
         status: 'fail',
@@ -102,10 +100,9 @@ const testJWT = (supertestCall: request.Test) => {
         .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(401);
     });
@@ -116,10 +113,9 @@ const testJWT = (supertestCall: request.Test) => {
         .delete('/api/v1/users/deleteMe')
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       const expectedMessage = {
         status: 'fail',
@@ -133,7 +129,7 @@ const testJWT = (supertestCall: request.Test) => {
     it('Should have a status code of 401', async () => {
       const token = await signUpAndGetToken();
       await request(app)
-        .patch('/api/v1/users/changePassword')
+        .patch('/api/v1/users/changeMyPassword')
         .send({
           currentPassword: 'heng1230@sjfl.',
           password: 'newPassword',
@@ -141,10 +137,9 @@ const testJWT = (supertestCall: request.Test) => {
         })
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(401);
     });
@@ -152,7 +147,7 @@ const testJWT = (supertestCall: request.Test) => {
     it('Should respond with a status of "fail" and a message of "Password has changed, please log in again."', async () => {
       const token = await signUpAndGetToken();
       await request(app)
-        .patch('/api/v1/users/changePassword')
+        .patch('/api/v1/users/changeMyPassword')
         .send({
           currentPassword: 'heng1230@sjfl.',
           password: 'newPassword',
@@ -160,10 +155,9 @@ const testJWT = (supertestCall: request.Test) => {
         })
         .set('Authorization', `Bearer ${token}`);
 
-      const response = await supertestCall.set(
-        'Authorization',
-        `Bearer ${token}`,
-      );
+      const response = await request(app)
+        [method](url)
+        .set('Authorization', `Bearer ${token}`);
 
       const expectedMessage = {
         status: 'fail',
@@ -174,4 +168,4 @@ const testJWT = (supertestCall: request.Test) => {
   });
 };
 
-export default testJWT;
+export default testJWTAuth;
