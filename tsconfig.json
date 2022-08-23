@@ -10,5 +10,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "Node"
+  },
+  "include": ["src/**/*"],
+  "ts-node": {
+    "files": true
   }
 }
