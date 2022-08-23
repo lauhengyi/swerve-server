@@ -57,6 +57,25 @@ describe('POST users/signup', () => {
 
       expect(response.body).toEqual(expectedResponse);
     });
+
+    it('It should return a cookie with the jwt token that is secure, expires, httpOnly and sameSite', async () => {
+      const body = {
+        username: 'dreadmill_gratis',
+        email: 'dreadmill@gmail.com',
+        password: 'heng1230@sjfl.',
+        passwordConfirm: 'heng1230@sjfl.',
+        accountType: 'regular',
+      };
+
+      const response = await request(app)
+        .post('/api/v1/users/signup')
+        .send(body);
+
+      expect(response.headers['set-cookie'][0]).toMatch(/jwt=/);
+      expect(response.headers['set-cookie'][0]).toMatch(/Secure/);
+      expect(response.headers['set-cookie'][0]).toMatch(/HttpOnly/);
+      expect(response.headers['set-cookie'][0]).toMatch(/SameSite=Strict/);
+    });
   });
 
   describe('When you try to create a user with an existing username', () => {

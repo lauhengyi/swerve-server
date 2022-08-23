@@ -25,6 +25,13 @@ const sendTokenRes = (
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
+  res.cookie('jwt', token, {
+    expires: new Date(Date.now() + Number(process.env.JWT_EXPIRES_IN)),
+    secure: true,
+    httpOnly: true,
+    sameSite: true,
+  });
+
   res.status(statusCode).json({
     status: 'success',
     token,
