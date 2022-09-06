@@ -1,10 +1,23 @@
 import express from 'express';
+
 import errorController from './controllers/errorController';
 import AppError from './utils/AppError';
 import productRoutes from './routes/productRoutes';
 import userRoutes from './routes/userRoutes';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
+
+// Rate limiting middleware to prevent brute force and DDOS attacks
+// 100 request per ip per 15 minutes
+app.use(
+  '/api',
+  rateLimit({
+    max: 100,
+    windowMs: 900000,
+    message: 'Too many requests from this IP, please try again later.',
+  }),
+);
 
 // Parses incoming requests with JSON payloads.
 // The new body object will be empty if the request body is not JSON.

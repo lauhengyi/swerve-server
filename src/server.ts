@@ -10,7 +10,7 @@ process.on('uncaughtException', (err) => {
 });
 
 // Load environment variables from .env file
-dotenv.config({ path: './config.env' });
+dotenv.config();
 
 // Connect to database
 if (!process.env.DATABASE_URL || !process.env.DATABASE_PASSWORD) {
