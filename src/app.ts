@@ -25,7 +25,7 @@ app.use(
 
 // Parses incoming requests with JSON payloads.
 // The new body object will be empty if the request body is not JSON.
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 
 // Routes
 const apiString = '/api/v1';
