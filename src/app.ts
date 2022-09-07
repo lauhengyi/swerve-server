@@ -1,4 +1,5 @@
 import express from 'express';
+import helmet from 'helmet';
 
 import errorController from './controllers/errorController';
 import AppError from './utils/AppError';
@@ -7,6 +8,9 @@ import userRoutes from './routes/userRoutes';
 import rateLimit from 'express-rate-limit';
 
 const app = express();
+
+// Add http security headers
+app.use(helmet());
 
 // Rate limiting middleware to prevent brute force and DDOS attacks
 // 100 request per ip per 15 minutes
