@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import expressMongoSanitize from 'express-mongo-sanitize';
 import { xss } from 'express-xss-sanitizer';
+import hpp from 'hpp';
 
 import errorController from './controllers/errorController';
 import AppError from './utils/AppError';
@@ -34,6 +35,9 @@ app.use(expressMongoSanitize());
 
 // Data sanitization against XSS
 app.use(xss());
+
+// Prevents parameter pollution
+app.use(hpp());
 
 // Routes
 const apiString = '/api/v1';
