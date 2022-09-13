@@ -1,11 +1,13 @@
 import express from 'express';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import expressMongoSanitize from 'express-mongo-sanitize';
+import { xss } from 'express-xss-sanitizer';
 
 import errorController from './controllers/errorController';
 import AppError from './utils/AppError';
 import productRoutes from './routes/productRoutes';
 import userRoutes from './routes/userRoutes';
-import rateLimit from 'express-rate-limit';
 
 const app = express();
 
@@ -26,6 +28,12 @@ app.use(
 // Parses incoming requests with JSON payloads.
 // The new body object will be empty if the request body is not JSON.
 app.use(express.json({ limit: '10kb' }));
+
+// Data sanitization against NoSQL query injection
+app.use(expressMongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
 
 // Routes
 const apiString = '/api/v1';
