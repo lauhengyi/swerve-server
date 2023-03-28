@@ -2,7 +2,16 @@
 An app that connects merchants with consumers.
 
 ## Tech stack
-Express.js
+
+### Runtime
+Typescript
 Node.js
+### Frameworks
+Express.js
 MongoDB
 MongooseDB
+### Testing 
+Jest.js
+
+
+
